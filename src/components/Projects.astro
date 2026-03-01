@@ -1,0 +1,78 @@
+---
+import { PROJECT_ITEMS } from '../data/portfolio';
+import { useTranslations } from '../i18n/utils';
+import type { SupportedLocale } from '../i18n/utils';
+import DecorativeBlobs from './DecorativeBlobs.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: SupportedLocale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section
+  id="projects"
+  class="relative section-padding overflow-hidden"
+  style="background: var(--color-surface-900);"
+>
+  <DecorativeBlobs variant="subtle" />
+
+  <div class="container-max relative z-10">
+
+    <!-- Section header -->
+    <div class="reveal mb-16">
+      <p
+        class="text-sm font-semibold tracking-widest uppercase mb-3"
+        style="color: var(--color-brand-400);"
+        data-i18n="projects.label"
+      >
+        {t.projects.label}
+      </p>
+      <h2 class="text-section-title" style="color: var(--color-text-primary);" data-i18n="projects.title">
+        {t.projects.title}
+      </h2>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {PROJECT_ITEMS.map((project, idx) => {
+        const tItem = t.project_items[idx];
+        return (
+          <article
+            class={`reveal ${idx % 2 === 0 ? 'reveal-from-left' : 'reveal-from-right'} reveal-delay-${Math.min(idx + 1, 4)} card p-6 flex flex-col gap-4`}
+          >
+            <!-- Title -->
+            <h3 class="text-lg font-bold m-0" style="color: var(--color-text-primary);">
+              {project.title}
+            </h3>
+
+            <!-- Description -->
+            <p
+              class="text-sm leading-relaxed m-0 flex-1"
+              style="color: var(--color-text-secondary);"
+              data-i18n={`project_items.${idx}.description`}
+            >
+              {tItem?.description ?? project.description}
+            </p>
+
+            <!-- Tags with Devicons -->
+            <div class="flex flex-wrap gap-2 mt-auto pt-2">
+              {project.tags.map((tag) => (
+                <span class="tag-chip">
+                  {tag.label === 'Pinia'
+                    ? <Icon name="pinia" size={15} />
+                    : <i class={tag.devicon}></i>
+                  }
+                  {tag.label}
+                </span>
+              ))}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

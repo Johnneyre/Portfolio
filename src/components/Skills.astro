@@ -1,0 +1,67 @@
+---
+import { SKILL_CATEGORIES } from '../data/portfolio';
+import { useTranslations } from '../i18n/utils';
+import type { SupportedLocale } from '../i18n/utils';
+import DecorativeBlobs from './DecorativeBlobs.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  locale: SupportedLocale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section
+  id="skills"
+  class="relative section-padding overflow-hidden"
+  style="background: var(--color-surface-950);"
+>
+  <DecorativeBlobs variant="subtle" />
+
+  <div class="container-max relative z-10">
+
+    <!-- Section header -->
+    <div class="reveal mb-4">
+      <h2 class="text-section-title" style="color: var(--color-text-primary);" data-i18n="skills.title">
+        {t.skills.title}
+      </h2>
+    </div>
+    <p class="reveal mb-14 text-base leading-relaxed max-w-xl" style="color: var(--color-text-secondary);" data-i18n="skills.subtitle">
+      {t.skills.subtitle}
+    </p>
+
+    <!-- Categories grid -->
+    <div class="flex flex-col gap-10">
+      {SKILL_CATEGORIES.map((category, catIdx) => (
+        <div class={`reveal reveal-delay-${Math.min(catIdx + 1, 3)}`}>
+          <!-- Category title -->
+          <h3
+            class="text-base font-bold mb-6 gradient-text"
+            data-i18n={`skill_category_labels.${catIdx}`}
+          >
+            {t.skill_category_labels[catIdx] ?? category.label}
+          </h3>
+
+          <!-- Skills icon grid -->
+          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+            {category.skills.map((skill, sIdx) => (
+              <div
+                class={`reveal reveal-delay-${Math.min(sIdx + 1, 5)} skill-icon-card`}
+                title={skill.label}
+              >
+                {skill.label === 'Pinia'
+                  ? <Icon name="pinia" size={32} />
+                  : <i class={skill.devicon}></i>
+                }
+                <span>{skill.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

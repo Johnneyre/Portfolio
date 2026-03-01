@@ -1,0 +1,138 @@
+---
+// Client-side only – no locale prop needed
+---
+
+<div class="relative" id="lang-switcher">
+  <button
+    id="lang-toggle-btn"
+    aria-label="Switch language"
+    class="lang-switcher-btn flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-colors duration-200"
+    style="border-color: var(--color-surface-700); background: var(--color-surface-800); color: var(--color-text-secondary);"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="12" cy="12" r="10"></circle>
+      <path
+        d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+      ></path>
+    </svg>
+    <span id="lang-current-label" class="text-sm font-bold">ES</span>
+    <svg
+      id="lang-chevron"
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      style="transition: transform 0.2s ease;"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dropdown -->
+  <div
+    id="lang-dropdown"
+    class="lang-dropdown absolute right-0 mt-1.5 rounded-xl border shadow-xl overflow-hidden hidden"
+    style="
+      background: var(--color-surface-800);
+      border-color: var(--color-surface-700);
+      min-width: 90px;
+      z-index: 100;
+    "
+  >
+    <button
+      class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
+      data-lang="es"
+      style="color: var(--color-text-secondary);"
+    >
+      <span>ES</span>
+      <span
+        id="dot-es"
+        class="w-1.5 h-1.5 rounded-full"
+        style="background: var(--color-brand-400);"></span>
+    </button>
+    <button
+      class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
+      data-lang="en"
+      style="color: var(--color-text-secondary);"
+    >
+      <span>EN</span>
+      <span
+        id="dot-en"
+        class="w-1.5 h-1.5 rounded-full hidden"
+        style="background: var(--color-brand-400);"></span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById("lang-toggle-btn")!;
+  const dropdown = document.getElementById("lang-dropdown")!;
+  const chevron = document.getElementById("lang-chevron")!;
+  const label = document.getElementById("lang-current-label")!;
+  const dotEs = document.getElementById("dot-es")!;
+  const dotEn = document.getElementById("dot-en")!;
+
+  let isOpen = false;
+
+  function toggleDropdown(open: boolean): void {
+    isOpen = open;
+    dropdown.classList.toggle("hidden", !open);
+    chevron.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
+  }
+
+  function syncDots(lang: string): void {
+    label.textContent = lang.toUpperCase();
+    if (lang === "es") {
+      dotEs.classList.remove("hidden");
+      dotEn.classList.add("hidden");
+    } else {
+      dotEn.classList.remove("hidden");
+      dotEs.classList.add("hidden");
+    }
+  }
+
+  // Init from localStorage
+  const savedLang = localStorage.getItem("lang") || "es";
+  syncDots(savedLang);
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleDropdown(!isOpen);
+  });
+
+  document
+    .querySelectorAll<HTMLButtonElement>(".lang-option")
+    .forEach((opt) => {
+      opt.addEventListener("click", () => {
+        const lang = opt.dataset.lang!;
+        localStorage.setItem("lang", lang);
+        syncDots(lang);
+        toggleDropdown(false);
+        // Trigger global language switch
+        window.dispatchEvent(
+          new CustomEvent("lang-change", { detail: { lang } }),
+        );
+      });
+    });
+
+  document.addEventListener("click", (e) => {
+    if (!document.getElementById("lang-switcher")!.contains(e.target as Node)) {
+      toggleDropdown(false);
+    }
+  });
+</script>

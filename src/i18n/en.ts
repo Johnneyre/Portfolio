@@ -1,14 +1,27 @@
-import type { Translations } from './es';
+import type { Translations } from '../types/translations';
 
 export const en: Translations = {
+  meta: {
+    title: 'Johnneyre Zambrano — Front-End Developer',
+    description: '3+ years building scalable web applications. Specialist in Vue.js, TypeScript and modular architectures.',
+  },
+  owner: {
+    name: 'Johnneyre Zambrano',
+    role: 'Front-End Developer',
+  },
   nav: {
     experience: 'Experience',
     projects: 'Projects',
     skills: 'Skills',
     home: 'Home',
   },
+  social: {
+    email: 'johnneyrez@gmail.com',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+  },
   hero: {
-    greeting: 'Hi, I\'m',
+    greeting: "Hi, I'm",
     role: 'Front-End Developer',
     bio: '3+ years building high-performance web apps. I specialize in clean interfaces, modular architectures, and scalable code.',
     cta_projects: 'View projects',
@@ -39,8 +52,8 @@ export const en: Translations = {
       projects: 'Projects',
     },
   },
-  timeline_items: [
-    {
+  timeline_items: {
+    linktic: {
       period: 'August 2023 – Present',
       role: 'Front-End Developer',
       bullets: [
@@ -51,7 +64,7 @@ export const en: Translations = {
         'Worked in an agile environment under Scrum using Azure DevOps for sprint management, user stories and bug resolution.',
       ],
     },
-    {
+    university: {
       period: 'September 2020 – December 2024',
       role: 'Computer Engineering',
       bullets: [
@@ -59,24 +72,48 @@ export const en: Translations = {
         'The system enabled real-time activity monitoring by management.',
       ],
     },
-  ],
-  project_items: [
-    {
+  },
+  project_items: {
+    sgdea: {
+      title: 'SGDEA',
       description: 'Electronic Document Archive Management System. Reusable components in Vue.js and TypeScript, following business rules defined with analysts and QA.',
     },
-    {
+    'insurance-system': {
+      title: 'Insurance Management System',
       description: 'Dashboard with real-time data visualization consuming the Spring Boot actuator: logs, cronjobs and active microservice metrics.',
     },
-    {
+    minegos: {
+      title: 'Minegos E-commerce',
       description: 'Improvements in products, categories, configuration and reports modules. Optimizing the experience for sellers and buyers.',
     },
-    {
+    'hours-control': {
+      title: 'Hours Control',
       description: 'Responsive web system for university employee hours tracking. Automation of repetitive tasks and real-time supervision for management.',
     },
-  ],
-  skill_category_labels: [
-    'Languages & Frameworks',
-    'Styles & UI',
-    'Tools & Methods',
-  ],
-} as const;
+  },
+  skill_categories: {
+    'languages-frameworks': 'Languages & Frameworks',
+    'styles-ui': 'Styles & UI',
+    'tools-methods': 'Tools & Methods',
+  },
+  skill_labels: {
+    typescript: 'TypeScript',
+    javascript: 'JavaScript',
+    vuejs: 'Vue.js',
+    sveltekit: 'SvelteKit',
+    html5: 'HTML5',
+    css3: 'CSS3',
+    tailwindcss: 'TailwindCSS',
+    quasar: 'Quasar',
+    sass: 'Sass',
+    figma: 'Figma',
+    git: 'Git',
+    github: 'GitHub',
+    'azure-devops': 'Azure DevOps',
+    supabase: 'Supabase',
+    pinia: 'Pinia',
+    astro: 'Astro',
+    'rest-api': 'REST API',
+    'spring-boot': 'Spring Boot',
+  },
+};

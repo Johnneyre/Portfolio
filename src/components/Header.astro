@@ -1,8 +1,8 @@
 ---
-import { useTranslations, getLocalePath } from '../i18n/utils';
-import type { SupportedLocale } from '../i18n/utils';
-import ThemeToggle from './ThemeToggle.astro';
-import LangSwitcher from './LangSwitcher.astro';
+import { useTranslations, getLocalePath } from "../i18n/utils";
+import type { SupportedLocale } from "../i18n/utils";
+import ThemeToggle from "./ThemeToggle.astro";
+import LangSwitcher from "./LangSwitcher.astro";
 
 interface Props {
   locale: SupportedLocale;
@@ -14,32 +14,43 @@ const t = useTranslations(locale);
 
 <header class="header-glass sticky top-0 z-50 transition-shadow">
   <nav class="container-max flex items-center justify-between py-4 px-5">
-
     <!-- Logo -->
-    <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text">
+    <a
+      href={getLocalePath(locale)}
+      class="font-extrabold text-xl tracking-tight gradient-text"
+    >
       JZ
     </a>
 
     <!-- Desktop nav links -->
     <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
       <li>
-        <a href="#experience" class="nav-link link-hover font-medium"
+        <a
+          href="#experience"
+          class="nav-link link-hover font-medium"
           data-i18n="nav.experience"
-          style="font-size: 15.5px;">
+          style="font-size: 15.5px;"
+        >
           {t.nav.experience}
         </a>
       </li>
       <li>
-        <a href="#projects" class="nav-link link-hover font-medium"
+        <a
+          href="#projects"
+          class="nav-link link-hover font-medium"
           data-i18n="nav.projects"
-          style="font-size: 15.5px;">
+          style="font-size: 15.5px;"
+        >
           {t.nav.projects}
         </a>
       </li>
       <li>
-        <a href="#skills" class="nav-link link-hover font-medium"
+        <a
+          href="#skills"
+          class="nav-link link-hover font-medium"
           data-i18n="nav.skills"
-          style="font-size: 15.5px;">
+          style="font-size: 15.5px;"
+        >
           {t.nav.skills}
         </a>
       </li>
@@ -51,13 +62,24 @@ const t = useTranslations(locale);
       <ThemeToggle />
 
       <!-- Mobile hamburger -->
-      <label class="md:hidden cursor-pointer" for="mobile-menu-toggle" aria-label="Menú"
-        style="color: var(--color-text-secondary);">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <line x1="3" y1="12" x2="21" y2="12" />
-          <line x1="3" y1="18" x2="21" y2="18" />
+      <label
+        class="md:hidden cursor-pointer"
+        for="mobile-menu-toggle"
+        aria-label="Menú"
+        style="color: var(--color-text-secondary);"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </label>
     </div>
@@ -65,19 +87,36 @@ const t = useTranslations(locale);
 
   <!-- Mobile menu -->
   <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" />
-  <div class="peer-checked:flex hidden flex-col gap-4 px-5 pb-5 md:hidden border-t"
-    style="border-color: var(--color-surface-700);">
-    <a href="#experience" class="nav-link link-hover font-medium py-1" data-i18n="nav.experience">{t.nav.experience}</a>
-    <a href="#projects"   class="nav-link link-hover font-medium py-1" data-i18n="nav.projects">{t.nav.projects}</a>
-    <a href="#skills"     class="nav-link link-hover font-medium py-1" data-i18n="nav.skills">{t.nav.skills}</a>
+  <div
+    class="peer-checked:flex hidden flex-col gap-4 px-5 pb-5 md:hidden border-t"
+    style="border-color: var(--color-surface-700);"
+  >
+    <a
+      href="#experience"
+      class="nav-link link-hover font-medium py-1"
+      data-i18n="nav.experience"
+      >{t.nav.experience}
+    </a>
+    <a
+      href="#projects"
+      class="nav-link link-hover font-medium py-1"
+      data-i18n="nav.projects"
+      >{t.nav.projects}
+    </a>
+    <a
+      href="#skills"
+      class="nav-link link-hover font-medium py-1"
+      data-i18n="nav.skills"
+      >{t.nav.skills}
+    </a>
   </div>
 </header>
 
 <script>
-  const header = document.querySelector('.header-glass') as HTMLElement | null;
+  const header = document.querySelector(".header-glass") as HTMLElement | null;
   function updateHeader(): void {
-    header?.classList.toggle('is-scrolled', window.scrollY > 40);
+    header?.classList.toggle("is-scrolled", window.scrollY > 40);
   }
-  window.addEventListener('scroll', updateHeader, { passive: true });
+  window.addEventListener("scroll", updateHeader, { passive: true });
   updateHeader();
 </script>

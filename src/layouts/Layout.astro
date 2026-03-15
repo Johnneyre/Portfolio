@@ -1,32 +1,31 @@
 ---
-import '../styles/global.css';
-import Header from '../components/Header.astro';
-import type { SupportedLocale } from '../i18n/utils';
-import { es } from '../i18n/es';
-import { en } from '../i18n/en';
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import type { SupportedLocale } from "../i18n/utils";
+import { useTranslations } from "../i18n/utils";
+import { es } from "../i18n/es";
+import { en } from "../i18n/en";
 
 interface Props {
-  title?: string;
-  description?: string;
   locale?: SupportedLocale;
 }
 
-const {
-  title = 'Johnneyre Zambrano — Front-End Developer',
-  description = '+3 años construyendo aplicaciones web escalables. Especialista en Vue.js, TypeScript y arquitecturas modulares.',
-  locale = (Astro.currentLocale as SupportedLocale) ?? 'es',
-} = Astro.props;
+const { locale = "es" } = Astro.props;
+const t = useTranslations(locale);
+
+const title = t.meta.title;
+const description = t.meta.description;
 
 const translationsJson = JSON.stringify({ es, en });
 ---
 
 <!doctype html>
-<html lang="es" id="html-root">
+<html lang={locale} id="html-root">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="author" content="Johnneyre Zambrano" />
+    <meta name="author" content={t.owner.name} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -50,8 +49,8 @@ const translationsJson = JSON.stringify({ es, en });
     <!-- Anti-FOUC: apply saved theme and language before first paint -->
     <script is:inline>
       (function () {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'light') document.documentElement.classList.add('light');
+        const theme = localStorage.getItem("theme");
+        if (theme === "light") document.documentElement.classList.add("light");
       })();
     </script>
   </head>
@@ -64,9 +63,10 @@ const translationsJson = JSON.stringify({ es, en });
       class="pointer-events-none fixed inset-x-0 top-0 z-10"
       style="height: 18rem; background: linear-gradient(to bottom, oklch(72% 0.16 155 / 0.2), transparent);"
       aria-hidden="true"
-    ></div>
+    >
+    </div>
 
-    <Header locale="es" />
+    <Header locale={locale} />
 
     <main>
       <slot />
@@ -79,46 +79,51 @@ const translationsJson = JSON.stringify({ es, en });
 
     <!-- Client-side i18n engine -->
     <script>
-      type Lang = 'es' | 'en';
+      type Lang = "es" | "en";
 
       function getByPath(obj: Record<string, unknown>, path: string): string {
-        return path.split('.').reduce<unknown>((acc, key) => {
-          if (acc && typeof acc === 'object') return (acc as Record<string, unknown>)[key];
+        return path.split(".").reduce<unknown>((acc, key) => {
+          if (acc && typeof acc === "object")
+            return (acc as Record<string, unknown>)[key];
           return undefined;
         }, obj) as string;
       }
 
       function applyLang(lang: Lang): void {
-        const t = (window as unknown as { __T__: Record<Lang, Record<string, unknown>> }).__T__[lang];
+        const t = (
+          window as unknown as { __T__: Record<Lang, Record<string, unknown>> }
+        ).__T__[lang];
         if (!t) return;
 
         document.documentElement.lang = lang;
 
         // Simple text replacements
-        document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
-          const key = el.getAttribute('data-i18n')!;
+        document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n")!;
           const val = getByPath(t, key);
           if (val !== undefined) el.textContent = String(val);
         });
 
         // Bullet list replacements: data-i18n-bullets="timeline_items.0.bullets"
-        document.querySelectorAll<HTMLElement>('[data-i18n-bullets]').forEach((container) => {
-          const key = container.getAttribute('data-i18n-bullets')!;
-          const bullets = getByPath(t, key) as unknown as string[];
-          if (!Array.isArray(bullets)) return;
-          const paragraphs = container.querySelectorAll<HTMLElement>('li p');
-          bullets.forEach((text, i) => {
-            if (paragraphs[i]) paragraphs[i].textContent = text;
+        document
+          .querySelectorAll<HTMLElement>("[data-i18n-bullets]")
+          .forEach((container) => {
+            const key = container.getAttribute("data-i18n-bullets")!;
+            const bullets = getByPath(t, key) as unknown as string[];
+            if (!Array.isArray(bullets)) return;
+            const paragraphs = container.querySelectorAll<HTMLElement>("li p");
+            bullets.forEach((text, i) => {
+              if (paragraphs[i]) paragraphs[i].textContent = text;
+            });
           });
-        });
       }
 
       // Apply on load
-      const savedLang = (localStorage.getItem('lang') || 'es') as Lang;
-      if (savedLang !== 'es') applyLang(savedLang);
+      const savedLang = (localStorage.getItem("lang") || "es") as Lang;
+      if (savedLang !== "es") applyLang(savedLang);
 
       // Listen for language change events from LangSwitcher
-      window.addEventListener('lang-change', (e) => {
+      window.addEventListener("lang-change", (e) => {
         const lang = (e as CustomEvent<{ lang: Lang }>).detail.lang;
         applyLang(lang);
       });
@@ -130,15 +135,17 @@ const translationsJson = JSON.stringify({ es, en });
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
+              entry.target.classList.add("is-visible");
               observer.unobserve(entry.target);
             }
           });
         },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
       );
 
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>

@@ -1,9 +1,24 @@
-export const es = {
+import type { Translations } from '../types/translations';
+
+export const es: Translations = {
+  meta: {
+    title: 'Johnneyre Zambrano — Front-End Developer',
+    description: '+3 años construyendo aplicaciones web escalables. Especialista en Vue.js, TypeScript y arquitecturas modulares.',
+  },
+  owner: {
+    name: 'Johnneyre Zambrano',
+    role: 'Front-End Developer',
+  },
   nav: {
     experience: 'Experiencia',
     projects: 'Proyectos',
     skills: 'Skills',
     home: 'Inicio',
+  },
+  social: {
+    email: 'johnneyrez@gmail.com',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
   },
   hero: {
     greeting: 'Hola, soy',
@@ -37,8 +52,8 @@ export const es = {
       projects: 'Proyectos',
     },
   },
-  timeline_items: [
-    {
+  timeline_items: {
+    linktic: {
       period: 'Agosto 2023 – Actualidad',
       role: 'Front-End Developer',
       bullets: [
@@ -49,7 +64,7 @@ export const es = {
         'Trabajé en entorno ágil bajo Scrum usando Azure DevOps para gestión de sprints, historias de usuario y resolución de bugs.',
       ],
     },
-    {
+    university: {
       period: 'Septiembre 2020 – Diciembre 2024',
       role: 'Ingeniería en Informática',
       bullets: [
@@ -57,40 +72,50 @@ export const es = {
         'El sistema habilitó la supervisión de actividades en tiempo real por parte de la gerencia.',
       ],
     },
-  ],
-  project_items: [
-    {
+  },
+  project_items: {
+    sgdea: {
+      title: 'SGDEA',
       description: 'Sistema de Gestión Documental Electrónico de Archivo. Componentes reutilizables en Vue.js y TypeScript, siguiendo reglas de negocio definidas con analistas y QA.',
     },
-    {
+    'insurance-system': {
+      title: 'Sistema de Gestión de Seguros',
       description: 'Dashboard con visualización de datos en tiempo real consumiendo el actuator de Spring Boot: logs, cronjobs y métricas de microservicios activos.',
     },
-    {
+    minegos: {
+      title: 'E-commerce Minegos',
       description: 'Mejoras en módulos de productos, categorías, configuración y reportes. Optimizando la experiencia para vendedores y compradores.',
     },
-    {
+    'hours-control': {
+      title: 'Control de Horas',
       description: 'Sistema web responsive para control de horas de empleados universitarios. Automatización de tareas repetitivas y supervisión en tiempo real para la gerencia.',
     },
-  ],
-  skill_category_labels: [
-    'Lenguajes & Frameworks',
-    'Estilos & UI',
-    'Herramientas & Métodos',
-  ],
+  },
+  skill_categories: {
+    'languages-frameworks': 'Lenguajes & Frameworks',
+    'styles-ui': 'Estilos & UI',
+    'tools-methods': 'Herramientas & Métodos',
+  },
+  skill_labels: {
+    typescript: 'TypeScript',
+    javascript: 'JavaScript',
+    vuejs: 'Vue.js',
+    sveltekit: 'SvelteKit',
+    html5: 'HTML5',
+    css3: 'CSS3',
+    tailwindcss: 'TailwindCSS',
+    quasar: 'Quasar',
+    sass: 'Sass',
+    figma: 'Figma',
+    git: 'Git',
+    github: 'GitHub',
+    'azure-devops': 'Azure DevOps',
+    supabase: 'Supabase',
+    pinia: 'Pinia',
+    astro: 'Astro',
+    'rest-api': 'REST API',
+    'spring-boot': 'Spring Boot',
+  },
 };
 
-export interface Translations {
-  nav: { experience: string; projects: string; skills: string; home: string };
-  hero: {
-    greeting: string; role: string; bio: string;
-    cta_projects: string; cta_contact: string; available: string;
-    download_cv: string; scroll_label: string;
-  };
-  experience: { label: string; title: string; education_label: string; current: string };
-  projects: { label: string; title: string };
-  skills: { label: string; title: string; subtitle: string };
-  footer: { links: { home: string; experience: string; projects: string } };
-  timeline_items: Array<{ period: string; role: string; bullets: string[] }>;
-  project_items: Array<{ description: string }>;
-  skill_category_labels: string[];
-}
+export type { Translations } from '../types/translations';

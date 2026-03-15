@@ -39,36 +39,39 @@ const t = useTranslations(locale);
     <!-- Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {PROJECT_ITEMS.map((project, idx) => {
-        const tItem = t.project_items[idx];
+        const tItem = t.project_items[project.id as keyof typeof t.project_items];
         return (
           <article
             class={`reveal ${idx % 2 === 0 ? 'reveal-from-left' : 'reveal-from-right'} reveal-delay-${Math.min(idx + 1, 4)} card p-6 flex flex-col gap-4`}
           >
             <!-- Title -->
-            <h3 class="text-lg font-bold m-0" style="color: var(--color-text-primary);">
-              {project.title}
+            <h3 class="text-lg font-bold m-0" style="color: var(--color-text-primary);" data-i18n={`project_items.${project.id}.title`}>
+              {tItem.title}
             </h3>
 
             <!-- Description -->
             <p
               class="text-sm leading-relaxed m-0 flex-1"
               style="color: var(--color-text-secondary);"
-              data-i18n={`project_items.${idx}.description`}
+              data-i18n={`project_items.${project.id}.description`}
             >
-              {tItem?.description ?? project.description}
+              {tItem.description}
             </p>
 
             <!-- Tags with Devicons -->
             <div class="flex flex-wrap gap-2 mt-auto pt-2">
-              {project.tags.map((tag) => (
-                <span class="tag-chip">
-                  {tag.label === 'Pinia'
-                    ? <Icon name="pinia" size={15} />
-                    : <i class={tag.devicon}></i>
-                  }
-                  {tag.label}
-                </span>
-              ))}
+              {project.tags.map((tag) => {
+                const tagLabel = t.skill_labels[tag.id as keyof typeof t.skill_labels] ?? tag.id;
+                return (
+                  <span class="tag-chip">
+                    {tag.id === 'pinia'
+                      ? <Icon name="pinia" size={15} />
+                      : <i class={tag.devicon}></i>
+                    }
+                    {tagLabel}
+                  </span>
+                );
+              })}
             </div>
           </article>
         );

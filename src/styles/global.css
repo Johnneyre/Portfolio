@@ -232,7 +232,7 @@ body {
 /* ─── Timeline ──────────────────────────────────────────────── */
 .timeline-dot {
   position: absolute;
-  left: 0;
+  left: -2rem;      /* offsets pl-8 so dot center (0.6875rem) aligns with the line */
   top: 0.2rem;
   width: 1.375rem;
   height: 1.375rem;
@@ -333,12 +333,20 @@ body {
   border-color: oklch(82% 0.01 155) !important;
 }
 
+/* Lang option hover — dark mode */
+.lang-option:hover {
+  background: var(--color-surface-700);
+  color: var(--color-text-primary);
+}
+
+/* Lang option — light mode */
 .light .lang-option {
   color: oklch(25% 0.01 155) !important;
 }
 
 .light .lang-option:hover {
-  background: oklch(92% 0.006 155);
+  background: oklch(90% 0.008 155);
+  color: oklch(15% 0.02 155);
 }
 
 /* ─── Social button fill animation (left→right) ─────────────── */

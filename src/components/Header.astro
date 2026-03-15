@@ -74,8 +74,8 @@ const t = useTranslations(locale);
   <!-- Mobile menu -->
   <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" />
   <div
-    class="peer-checked:flex hidden flex-col gap-4 px-5 pb-5 md:hidden border-t"
-    style="border-color: var(--color-surface-700);"
+    class="peer-checked:flex hidden flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50"
+    style="border-color: var(--color-surface-700); background: var(--color-surface-900, var(--color-bg));"
   >
     <a href="#experience" class="nav-link link-hover font-medium py-1" data-i18n="nav.experience">
       {t.nav.experience}

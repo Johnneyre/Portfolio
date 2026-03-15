@@ -1,0 +1,70 @@
+---
+import type { SupportedLocale } from "../i18n/utils";
+import { useTranslations } from "../i18n/utils";
+import { SOCIAL_LINKS } from "../data/portfolio";
+
+interface Props {
+  locale: SupportedLocale;
+  canonicalUrl?: string;
+}
+
+const { locale, canonicalUrl } = Astro.props;
+const t = useTranslations(locale);
+
+const siteUrl =
+  import.meta.env.SITE || "https://portfolio-kappa-coral-77myeiypom.vercel.app";
+const currentUrl = canonicalUrl || new URL(Astro.url.pathname, siteUrl).href;
+
+const linkedinUrl = SOCIAL_LINKS.find((l) => l.icon === "linkedin")?.href;
+const githubUrl = SOCIAL_LINKS.find((l) => l.icon === "github")?.href;
+
+// JSON-LD structured data
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: t.owner.name,
+  jobTitle: t.owner.role,
+  description: t.meta.description,
+  url: siteUrl,
+  sameAs: [linkedinUrl, githubUrl].filter(Boolean),
+  knowsAbout: [
+    "Vue.js",
+    "TypeScript",
+    "JavaScript",
+    "Front-End Development",
+    "Web Development",
+    "TailwindCSS",
+    "Pinia",
+  ],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: t.meta.title,
+  description: t.meta.description,
+  url: siteUrl,
+  author: {
+    "@type": "Person",
+    name: t.owner.name,
+  },
+  inLanguage: locale === "es" ? "es-ES" : "en-US",
+};
+---
+
+<!-- Canonical URL -->
+<link rel="canonical" href={currentUrl} />
+
+<!-- Hreflang for multi-language -->
+<link rel="alternate" hreflang="es" href={siteUrl} />
+<link rel="alternate" hreflang="en" href={`${siteUrl}`} />
+<link rel="alternate" hreflang="x-default" href={siteUrl} />
+
+<!-- Additional SEO meta tags -->
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+<meta name="theme-color" content="#0a0a0a" />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />

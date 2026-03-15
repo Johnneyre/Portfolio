@@ -27,6 +27,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
   <div
     class="pointer-events-none absolute inset-x-0 top-0 h-72"
     style="background: linear-gradient(to bottom, oklch(72% 0.16 155 / 0.18), transparent);"
+    aria-hidden="true"
   >
   </div>
 
@@ -77,10 +78,11 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
             href={linkedinLink.href}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`${t.owner.name} en LinkedIn`}
             class="social-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border"
             style="border-color: var(--color-brand-500); background: oklch(58% 0.18 155 / 0.08); color: var(--color-text-primary);"
           >
-            <Icon name="linkedin" size={16} />
+            <Icon name="linkedin" size={16} aria-hidden="true" />
             LinkedIn
           </a>
 
@@ -89,20 +91,22 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
             href={githubLink.href}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`${t.owner.name} en GitHub`}
             class="social-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border"
             style="border-color: var(--color-brand-500); background: oklch(58% 0.18 155 / 0.08); color: var(--color-text-primary);"
           >
-            <Icon name="github" size={16} />
+            <Icon name="github" size={16} aria-hidden="true" />
             GitHub
           </a>
 
           <!-- Email -->
           <a
             href={emailLink.href}
+            aria-label={`Enviar email a ${t.owner.name}`}
             class="social-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border"
             style="border-color: var(--color-brand-500); background: oklch(58% 0.18 155 / 0.08); color: var(--color-text-primary);"
           >
-            <Icon name="email" size={16} />
+            <Icon name="email" size={16} aria-hidden="true" />
             {t.social.email}
           </a>
         </div>
@@ -119,7 +123,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
         >
           <Image
             src={perfilPhoto}
-            alt="Johnneyre Zambrano – Front-End Developer"
+            alt={`${t.owner.name} – ${t.owner.role}`}
             class="w-full h-full object-cover"
             loading="eager"
             width={256}

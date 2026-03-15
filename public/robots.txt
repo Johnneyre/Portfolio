@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://portfolio-kappa-coral-77myeiypom.vercel.app/sitemap-index.xml

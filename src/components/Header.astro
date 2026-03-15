@@ -3,6 +3,7 @@ import { useTranslations, getLocalePath } from "../i18n/utils";
 import type { SupportedLocale } from "../i18n/utils";
 import ThemeToggle from "./ThemeToggle.astro";
 import LangSwitcher from "./LangSwitcher.astro";
+import Icon from "./Icon.astro";
 
 interface Props {
   locale: SupportedLocale;
@@ -15,10 +16,7 @@ const t = useTranslations(locale);
 <header class="header-glass sticky top-0 z-50 transition-shadow">
   <nav class="container-max flex items-center justify-between py-4 px-5">
     <!-- Logo -->
-    <a
-      href={getLocalePath(locale)}
-      class="font-extrabold text-xl tracking-tight gradient-text"
-    >
+    <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text">
       JZ
     </a>
 
@@ -68,19 +66,7 @@ const t = useTranslations(locale);
         aria-label="Menú"
         style="color: var(--color-text-secondary);"
       >
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-        >
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
+        <Icon name="menu" size={22} />
       </label>
     </div>
   </nav>
@@ -91,23 +77,14 @@ const t = useTranslations(locale);
     class="peer-checked:flex hidden flex-col gap-4 px-5 pb-5 md:hidden border-t"
     style="border-color: var(--color-surface-700);"
   >
-    <a
-      href="#experience"
-      class="nav-link link-hover font-medium py-1"
-      data-i18n="nav.experience"
-      >{t.nav.experience}
+    <a href="#experience" class="nav-link link-hover font-medium py-1" data-i18n="nav.experience">
+      {t.nav.experience}
     </a>
-    <a
-      href="#projects"
-      class="nav-link link-hover font-medium py-1"
-      data-i18n="nav.projects"
-      >{t.nav.projects}
+    <a href="#projects" class="nav-link link-hover font-medium py-1" data-i18n="nav.projects">
+      {t.nav.projects}
     </a>
-    <a
-      href="#skills"
-      class="nav-link link-hover font-medium py-1"
-      data-i18n="nav.skills"
-      >{t.nav.skills}
+    <a href="#skills" class="nav-link link-hover font-medium py-1" data-i18n="nav.skills">
+      {t.nav.skills}
     </a>
   </div>
 </header>
@@ -118,5 +95,10 @@ const t = useTranslations(locale);
     header?.classList.toggle("is-scrolled", window.scrollY > 40);
   }
   window.addEventListener("scroll", updateHeader, { passive: true });
+
+  // Ensure header starts transparent on page load
+  if (window.location.hash === "" || window.location.hash === "#inicio") {
+    window.scrollTo(0, 0);
+  }
   updateHeader();
 </script>

@@ -1,7 +1,3 @@
----
-// Self-contained – no props
----
-
 <button
   id="theme-toggle"
   aria-label="Cambiar tema"
@@ -10,39 +6,55 @@
   style="border-color: var(--color-surface-700); background: var(--color-surface-800);"
 >
   <!-- Moon icon (dark mode active) — soft purple fill -->
-  <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="oklch(80% 0.18 295)"
-    stroke="oklch(70% 0.2 295)" stroke-width="1.5"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
+  <svg
+    id="icon-moon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="oklch(80% 0.18 295)"
+    stroke="oklch(70% 0.2 295)"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path>
   </svg>
 
   <!-- Sun icon (light mode active) — soft amber/yellow fill -->
-  <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-    viewBox="0 0 24 24" fill="oklch(85% 0.18 85)"
-    stroke="oklch(75% 0.22 85)" stroke-width="1.5"
-    stroke-linecap="round" stroke-linejoin="round"
-    class="hidden">
-    <circle cx="12" cy="12" r="5" />
-    <line x1="12" y1="1"  x2="12" y2="3"  />
-    <line x1="12" y1="21" x2="12" y2="23" />
-    <line x1="4.22"  y1="4.22"  x2="5.64"  y2="5.64"  />
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-    <line x1="1"  y1="12" x2="3"  y2="12" />
-    <line x1="21" y1="12" x2="23" y2="12" />
-    <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36" />
-    <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"  />
+  <svg
+    id="icon-sun"
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="oklch(85% 0.18 85)"
+    stroke="oklch(75% 0.22 85)"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="hidden"
+  >
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
   </svg>
 </button>
 
 <script>
-  const THEME_KEY = 'theme';
-  const LIGHT_CLASS = 'light';
+  const THEME_KEY = "theme";
+  const LIGHT_CLASS = "light";
 
   const root = document.documentElement;
-  const btn  = document.getElementById('theme-toggle')!;
-  const moon = document.getElementById('icon-moon')!;
-  const sun  = document.getElementById('icon-sun')!;
+  const btn = document.getElementById("theme-toggle")!;
+  const moon = document.getElementById("icon-moon")!;
+  const sun = document.getElementById("icon-sun")!;
 
   function isLight(): boolean {
     return root.classList.contains(LIGHT_CLASS);
@@ -50,20 +62,20 @@
 
   function syncIcons(): void {
     if (isLight()) {
-      moon.classList.add('hidden');
-      sun.classList.remove('hidden');
+      moon.classList.add("hidden");
+      sun.classList.remove("hidden");
     } else {
-      sun.classList.add('hidden');
-      moon.classList.remove('hidden');
+      sun.classList.add("hidden");
+      moon.classList.remove("hidden");
     }
   }
 
   function toggleTheme(): void {
     root.classList.toggle(LIGHT_CLASS);
-    localStorage.setItem(THEME_KEY, isLight() ? 'light' : 'dark');
+    localStorage.setItem(THEME_KEY, isLight() ? "light" : "dark");
     syncIcons();
   }
 
   syncIcons();
-  btn.addEventListener('click', toggleTheme);
+  btn.addEventListener("click", toggleTheme);
 </script>

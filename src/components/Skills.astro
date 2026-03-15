@@ -55,10 +55,11 @@ const t = useTranslations(locale);
                     class={`reveal reveal-delay-${Math.min(sIdx + 1, 5)} skill-icon-card`}
                     title={skillLabel}
                   >
-                    {skill.id === 'pinia'
-                      ? <Icon name="pinia" size={32} />
-                      : <i class={skill.devicon}></i>
-                    }
+                    {skill.id === 'pinia' ? (
+                      <Icon name="pinia" size={32} />
+                    ) : (
+                      <i class={skill.devicon} aria-hidden="true"></i>
+                    )}
                     <span>{skillLabel}</span>
                   </div>
                 );

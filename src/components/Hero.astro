@@ -19,9 +19,9 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
 ---
 
 <section
-  id="hero"
-  class="relative min-h-screen overflow-hidden"
-  style="padding-inline: clamp(1.25rem, 5vw, 2rem);"
+  id="inicio"
+  class="relative overflow-hidden"
+  style="height: 100dvh; padding-inline: clamp(1.25rem, 5vw, 2rem); margin-top: calc(-1 * var(--header-height));"
 >
   <!-- Top gradient: light green from top fading to base -->
   <div
@@ -34,20 +34,15 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
   <!-- Main content — centered vertically -->
   <div
     class="flex items-center container-max relative z-10"
-    style="min-height: 100vh; padding-block: 5rem 5rem;"
+    style="height: 100%; padding-top: calc(var(--header-height) + 2rem); padding-bottom: 5rem;"
   >
-    <div
-      class="w-full flex flex-col-reverse md:flex-row items-center justify-between gap-12"
-    >
+    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between gap-12">
       <!-- Left: text -->
       <div class="flex-1 text-center sm:text-left">
         <!-- Greeting + name -->
-        <h1
-          class="hero-enter-1 text-hero mb-2"
-          style="color: var(--color-text-primary);"
-        >
-          <span data-i18n="hero.greeting">{t.hero.greeting}</span>&nbsp;<span
-            class="gradient-text">{t.owner.name.split(" ")[0]}</span
+        <h1 class="hero-enter-1 text-hero mb-2" style="color: var(--color-text-primary);">
+          <span data-i18n="hero.greeting">{t.hero.greeting}</span>&nbsp;<span class="gradient-text"
+            >{t.owner.name.split(" ")[0]}</span
           >
         </h1>
 
@@ -70,9 +65,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
         </p>
 
         <!-- Social links row -->
-        <div
-          class="hero-enter-3 flex flex-wrap gap-3 justify-center sm:justify-start"
-        >
+        <div class="hero-enter-3 flex flex-wrap gap-3 justify-center sm:justify-start">
           <!-- LinkedIn -->
           <a
             href={linkedinLink.href}
@@ -135,14 +128,8 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
   </div>
 
   <!-- Scroll indicator — pinned at bottom center -->
-  <div
-    class="hero-enter-4 absolute bottom-8 inset-x-0 z-10 flex justify-center"
-  >
-    <a
-      href="#experience"
-      class="flex flex-col items-center gap-1.5"
-      style="text-decoration: none;"
-    >
+  <div class="hero-enter-4 absolute bottom-8 inset-x-0 z-10 flex justify-center">
+    <a href="#experience" class="flex flex-col items-center gap-1.5" style="text-decoration: none;">
       <span
         class="text-xs font-bold tracking-widest uppercase"
         style="color: var(--color-brand-400);"

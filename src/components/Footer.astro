@@ -1,6 +1,6 @@
 ---
-import { useTranslations } from '../i18n/utils';
-import type { SupportedLocale } from '../i18n/utils';
+import { useTranslations } from "../i18n/utils";
+import type { SupportedLocale } from "../i18n/utils";
 
 interface Props {
   locale: SupportedLocale;
@@ -14,9 +14,7 @@ const t = useTranslations(locale);
   class="border-t"
   style="border-color: var(--color-surface-700); background: var(--color-surface-950);"
 >
-  <div
-    class="container-max flex flex-col sm:flex-row items-center justify-between gap-4 py-7 px-5"
-  >
+  <div class="container-max flex flex-col sm:flex-row items-center justify-between gap-4 py-7 px-5">
     <!-- Left: copyright -->
     <p class="text-sm m-0" style="color: var(--color-text-muted);">
       &copy; <span id="footer-year"></span> Johnneyre Zambrano
@@ -26,7 +24,7 @@ const t = useTranslations(locale);
     <nav>
       <ul class="flex items-center gap-6 list-none m-0 p-0">
         <li>
-          <a href="#hero" class="link-hover text-sm font-medium" data-i18n="footer.links.home">
+          <a href="#inicio" class="link-hover text-sm font-medium" data-i18n="footer.links.home">
             {t.footer.links.home}
           </a>
         </li>
@@ -46,6 +44,6 @@ const t = useTranslations(locale);
 </footer>
 
 <script>
-  const el = document.getElementById('footer-year');
+  const el = document.getElementById("footer-year");
   if (el) el.textContent = new Date().getFullYear().toString();
 </script>

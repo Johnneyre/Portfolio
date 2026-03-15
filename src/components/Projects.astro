@@ -64,10 +64,11 @@ const t = useTranslations(locale);
                 const tagLabel = t.skill_labels[tag.id as keyof typeof t.skill_labels] ?? tag.id;
                 return (
                   <span class="tag-chip">
-                    {tag.id === 'pinia'
-                      ? <Icon name="pinia" size={15} />
-                      : <i class={tag.devicon}></i>
-                    }
+                    {tag.id === 'pinia' ? (
+                      <Icon name="pinia" size={18} />
+                    ) : (
+                      <i class={tag.devicon} aria-hidden="true"></i>
+                    )}
                     {tagLabel}
                   </span>
                 );

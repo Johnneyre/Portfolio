@@ -64,15 +64,15 @@ const translationsJson = JSON.stringify({ es, en });
     <!-- Reading progress bar (scroll-driven CSS) -->
     <div id="scroll-progress"></div>
 
+    <Header locale={locale} />
+
     <!-- Fixed top gradient visible through transparent header -->
     <div
-      class="pointer-events-none fixed inset-x-0 top-0 z-10"
+      class="pointer-events-none fixed inset-x-0 top-0 z-60"
       style="height: 18rem; background: linear-gradient(to bottom, oklch(72% 0.16 155 / 0.2), transparent);"
       aria-hidden="true"
     >
     </div>
-
-    <Header locale={locale} />
 
     <main>
       <slot />

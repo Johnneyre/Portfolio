@@ -2,12 +2,12 @@ import type { Translations } from '../types/translations';
 
 export const es: Translations = {
   meta: {
-    title: 'Johnneyre Zambrano — Front-End Developer',
+    title: 'Johnneyre Zambrano — FullStack Developer',
     description: '+3 años construyendo aplicaciones web escalables. Especialista en Vue.js, TypeScript y arquitecturas modulares.',
   },
   owner: {
     name: 'Johnneyre Zambrano',
-    role: 'Front-End Developer',
+    role: 'FullStack Developer',
   },
   nav: {
     experience: 'Experiencia',
@@ -22,7 +22,7 @@ export const es: Translations = {
   },
   hero: {
     greeting: 'Hola, soy',
-    role: 'Front-End Developer',
+    role: 'FullStack Developer',
     bio: '+3 años construyendo aplicaciones web de alto rendimiento. Me especializo en interfaces limpias, arquitecturas modulares y código escalable.',
     cta_projects: 'Ver proyectos',
     cta_contact: 'Contactar',
@@ -55,7 +55,7 @@ export const es: Translations = {
   timeline_items: {
     linktic: {
       period: 'Agosto 2023 – Actualidad',
-      role: 'Front-End Developer',
+      role: 'FullStack Developer',
       bullets: [
         'Construí interfaces y componentes interactivos para un sistema de gestión de seguros usando Vue.js y Pinia. Desarrollé visualizaciones de datos críticos consumiendo el actuator de Spring Boot, habilitando monitorización en tiempo real de logs, cronjobs y métricas de microservicios.',
         'Lideré la refactorización del frontend implementando Screaming Architecture para la división modular, mejorando significativamente la escalabilidad y mantenibilidad del producto.',

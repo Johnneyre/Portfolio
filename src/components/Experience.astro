@@ -23,7 +23,7 @@ const t = useTranslations(locale);
   <div class="container-max relative z-10">
 
     <!-- Section header -->
-    <div class="reveal mb-16">
+    <div class="reveal mb-12">
       <p
         class="text-sm font-semibold tracking-widest uppercase mb-3"
         style="color: var(--color-brand-400);"
@@ -68,20 +68,17 @@ const t = useTranslations(locale);
                   <span data-i18n={`timeline_items.${item.id}.role`}>{tItem.role}</span>
                 </h3>
                 <span class="hidden sm:inline text-sm" style="color: var(--color-text-muted);">—</span>
-                <span class="text-sm font-semibold gradient-text">{item.company}</span>
+                <span class="text-md font-semibold gradient-text">{item.company}</span>
               </div>
 
               <!-- Date below role -->
               <p
-                class="text-xs mb-1 flex items-center gap-1.5"
-                style="color: var(--color-text-muted);"
+                class="text-sm mb-6 flex items-center gap-1.5 font-bold"
+                style="color: var(--color-brand-400);"
               >
-                <Icon name="calendar" size={11} />
+                <Icon name="calendar" size={12} />
                 <span data-i18n={`timeline_items.${item.id}.period`}>{tItem.period}</span>
               </p>
-
-              <!-- Location -->
-              <p class="text-xs mb-6" style="color: var(--color-text-muted);">{item.location}</p>
 
               <!-- Bullets -->
               <ul

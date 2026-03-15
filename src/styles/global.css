@@ -13,7 +13,7 @@
   --color-surface-700: oklch(24% 0.012 155);
 
   --color-text-primary: oklch(95% 0.005 155);
-  --color-text-secondary: oklch(72% 0.01 155);
+  --color-text-secondary: oklch(88% 0 0);
   --color-text-muted: oklch(52% 0.01 155);
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;

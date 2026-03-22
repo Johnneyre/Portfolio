@@ -16,7 +16,7 @@ export const NAV_LINKS: readonly NavLink[] = [
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: 'email', href: 'mailto:johnneyrez@gmail.com', icon: 'email' },
-  { id: 'linkedin', href: 'https://www.linkedin.com/in/johnneyre-zambrano-15a571228/', icon: 'linkedin' },
+  { id: 'linkedin', href: 'https://www.linkedin.com/in/johnneyre-zambrano', icon: 'linkedin' },
   { id: 'github', href: 'https://github.com/Johnneyre', icon: 'github' },
 ] as const;
 

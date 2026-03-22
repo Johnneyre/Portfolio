@@ -11,8 +11,7 @@ interface Props {
 const { locale, canonicalUrl } = Astro.props;
 const t = useTranslations(locale);
 
-const siteUrl =
-  import.meta.env.SITE || "https://portfolio-kappa-coral-77myeiypom.vercel.app";
+const siteUrl = import.meta.env.SITE || "https://johnneyrez.dev";
 const currentUrl = canonicalUrl || new URL(Astro.url.pathname, siteUrl).href;
 
 const linkedinUrl = SOCIAL_LINKS.find((l) => l.icon === "linkedin")?.href;

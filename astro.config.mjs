@@ -7,7 +7,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://portfolio-kappa-coral-77myeiypom.vercel.app',
+  site: 'https://johnneyrez.dev',
 
   i18n: {
     defaultLocale: 'es',

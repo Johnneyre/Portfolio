@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import perfilPhoto from "../assets/perfil_photo.jpg";
 import { SOCIAL_LINKS } from "../data/portfolio";
 import { useTranslations } from "../i18n/utils";
@@ -114,13 +113,14 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
             box-shadow: 0 0 40px oklch(58% 0.18 155 / 0.25), 0 0 0 8px oklch(58% 0.18 155 / 0.06);
           "
         >
-          <Image
-            src={perfilPhoto}
+          <img
+            src={perfilPhoto.src}
             alt={`${t.owner.name} – ${t.owner.role}`}
             class="w-full h-full object-cover"
-            loading="eager"
+            loading="lazy"
             width={256}
             height={256}
+            decoding="auto"
           />
         </div>
       </div>

@@ -27,7 +27,6 @@ const translationsJson = JSON.stringify({ es, en });
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="author" content={t.owner.name} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
@@ -89,16 +88,15 @@ const translationsJson = JSON.stringify({ es, en });
 
       function getByPath(obj: Record<string, unknown>, path: string): string {
         return path.split(".").reduce<unknown>((acc, key) => {
-          if (acc && typeof acc === "object")
-            return (acc as Record<string, unknown>)[key];
+          if (acc && typeof acc === "object") return (acc as Record<string, unknown>)[key];
           return undefined;
         }, obj) as string;
       }
 
       function applyLang(lang: Lang): void {
-        const t = (
-          window as unknown as { __T__: Record<Lang, Record<string, unknown>> }
-        ).__T__[lang];
+        const t = (window as unknown as { __T__: Record<Lang, Record<string, unknown>> }).__T__[
+          lang
+        ];
         if (!t) return;
 
         document.documentElement.lang = lang;
@@ -111,17 +109,15 @@ const translationsJson = JSON.stringify({ es, en });
         });
 
         // Bullet list replacements: data-i18n-bullets="timeline_items.0.bullets"
-        document
-          .querySelectorAll<HTMLElement>("[data-i18n-bullets]")
-          .forEach((container) => {
-            const key = container.getAttribute("data-i18n-bullets")!;
-            const bullets = getByPath(t, key) as unknown as string[];
-            if (!Array.isArray(bullets)) return;
-            const paragraphs = container.querySelectorAll<HTMLElement>("li p");
-            bullets.forEach((text, i) => {
-              if (paragraphs[i]) paragraphs[i].textContent = text;
-            });
+        document.querySelectorAll<HTMLElement>("[data-i18n-bullets]").forEach((container) => {
+          const key = container.getAttribute("data-i18n-bullets")!;
+          const bullets = getByPath(t, key) as unknown as string[];
+          if (!Array.isArray(bullets)) return;
+          const paragraphs = container.querySelectorAll<HTMLElement>("li p");
+          bullets.forEach((text, i) => {
+            if (paragraphs[i]) paragraphs[i].textContent = text;
           });
+        });
       }
 
       // Apply on load
@@ -149,9 +145,7 @@ const translationsJson = JSON.stringify({ es, en });
         { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
       );
 
-      document
-        .querySelectorAll(".reveal")
-        .forEach((el) => observer.observe(el));
+      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>

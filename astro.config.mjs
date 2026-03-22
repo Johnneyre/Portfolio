@@ -3,9 +3,12 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://portfolio-kappa-coral-77myeiypom.vercel.app',
+
   i18n: {
     defaultLocale: 'es',
     locales: ['es', 'en'],
@@ -13,6 +16,7 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
   integrations: [
     sitemap({
       i18n: {
@@ -24,8 +28,11 @@ export default defineConfig({
       },
     }),
   ],
+
   vite: {
     // @ts-expect-error - Vite version mismatch between Astro and @tailwindcss/vite
     plugins: [tailwindcss()],
   },
+
+  adapter: cloudflare()
 });

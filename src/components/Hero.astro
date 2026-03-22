@@ -33,14 +33,14 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
 
   <!-- Main content — centered vertically -->
   <div
-    class="flex items-center container-max relative z-10"
+    class="flex items-center justify-center container-max relative z-10"
     style="height: 100%; padding-top: calc(var(--header-height) + 2rem); padding-bottom: 5rem;"
   >
-    <div class="w-full flex flex-col-reverse md:flex-row items-center justify-between gap-8">
+    <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-32">
       <!-- Left: text -->
       <div class="flex-1 text-center sm:text-left">
         <!-- Greeting + name -->
-        <h1 class="hero-enter-1 text-hero mb-2" style="color: var(--color-text-primary);">
+        <h1 class="text-hero mb-2" style="color: var(--color-text-primary);">
           <span data-i18n="hero.greeting">{t.hero.greeting}</span>&nbsp;<span class="gradient-text"
             >{t.owner.name.split(" ")[0]}</span
           >
@@ -73,7 +73,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
             rel="noopener noreferrer"
             aria-label={`${t.owner.name} en LinkedIn`}
             class="social-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border"
-            style="border-color: var(--color-brand-500); background: oklch(58% 0.18 155 / 0.08); color: var(--color-text-primary);"
+            style="border-color: var(--color-brand-500); background: oklch(95% 0.09 161 / 0.08); color: var(--color-text-primary);"
           >
             <Icon name="linkedin" size={16} aria-hidden="true" />
             LinkedIn
@@ -86,7 +86,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
             rel="noopener noreferrer"
             aria-label={`${t.owner.name} en GitHub`}
             class="social-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border"
-            style="border-color: var(--color-brand-500); background: oklch(58% 0.18 155 / 0.08); color: var(--color-text-primary);"
+            style="border-color: var(--color-brand-500); background: oklch(95% 0.09 161 / 0.08); color: var(--color-text-primary);"
           >
             <Icon name="github" size={16} aria-hidden="true" />
             GitHub
@@ -97,7 +97,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
             href={emailLink.href}
             aria-label={`Enviar email a ${t.owner.name}`}
             class="social-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold border"
-            style="border-color: var(--color-brand-500); background: oklch(58% 0.18 155 / 0.08); color: var(--color-text-primary);"
+            style="border-color: var(--color-brand-500); background: oklch(95% 0.09 161 / 0.08); color: var(--color-text-primary);"
           >
             <Icon name="email" size={16} aria-hidden="true" />
             {t.social.email}

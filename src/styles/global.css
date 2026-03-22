@@ -11,6 +11,7 @@
   --color-surface-900: oklch(12% 0.012 155);
   --color-surface-800: oklch(17% 0.012 155);
   --color-surface-700: oklch(24% 0.012 155);
+  --color-header-buttons: oklch(17% 0.012 155);
 
   --color-text-primary: oklch(95% 0.005 155);
   --color-text-secondary: oklch(88% 0 0);
@@ -28,6 +29,7 @@
   --color-surface-900: oklch(96% 0.005 155);
   --color-surface-800: oklch(92% 0.006 155);
   --color-surface-700: oklch(86% 0.008 155);
+  --color-header-buttons: oklch(0.99 0 0);
   --color-text-primary: oklch(12% 0.01 155);
   --color-text-secondary: oklch(32% 0.01 155);
   --color-text-muted: oklch(52% 0.01 155);
@@ -316,7 +318,7 @@ body {
 .light .lang-switcher-btn,
 .light #lang-toggle-btn {
   border-color: oklch(80% 0.012 155);
-  background: oklch(94% 0.006 155);
+  background: var(--color-header-buttons);
   color: oklch(25% 0.01 155);
 }
 

@@ -8,7 +8,7 @@ import Icon from "./Icon.astro";
     id="lang-toggle-btn"
     aria-label="Switch language"
     class="lang-switcher-btn flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-colors duration-200"
-    style="border-color: var(--color-surface-700); background: var(--color-surface-800); color: var(--color-text-primary);"
+    style="border-color: var(--color-surface-700); background: var(--color-header-buttons); color: var(--color-text-primary);"
   >
     <Icon name="globe" size={14} />
     <span id="lang-current-label" class="text-sm font-bold">ES</span>
@@ -34,10 +34,8 @@ import Icon from "./Icon.astro";
       style="color: var(--color-text-primary);"
     >
       <span>ES</span>
-      <span
-        id="dot-es"
-        class="w-1.5 h-1.5 rounded-full"
-        style="background: var(--color-brand-400);"></span>
+      <span id="dot-es" class="w-1.5 h-1.5 rounded-full" style="background: var(--color-brand-400);"
+      ></span>
     </button>
     <button
       class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
@@ -89,20 +87,16 @@ import Icon from "./Icon.astro";
     toggleDropdown(!isOpen);
   });
 
-  document
-    .querySelectorAll<HTMLButtonElement>(".lang-option")
-    .forEach((opt) => {
-      opt.addEventListener("click", () => {
-        const lang = opt.dataset.lang!;
-        localStorage.setItem("lang", lang);
-        syncDots(lang);
-        toggleDropdown(false);
-        // Trigger global language switch
-        window.dispatchEvent(
-          new CustomEvent("lang-change", { detail: { lang } }),
-        );
-      });
+  document.querySelectorAll<HTMLButtonElement>(".lang-option").forEach((opt) => {
+    opt.addEventListener("click", () => {
+      const lang = opt.dataset.lang!;
+      localStorage.setItem("lang", lang);
+      syncDots(lang);
+      toggleDropdown(false);
+      // Trigger global language switch
+      window.dispatchEvent(new CustomEvent("lang-change", { detail: { lang } }));
     });
+  });
 
   document.addEventListener("click", (e) => {
     if (!document.getElementById("lang-switcher")!.contains(e.target as Node)) {

@@ -54,8 +54,15 @@ const translationsJson = JSON.stringify({ es, en });
     <!-- Anti-FOUC: apply saved theme and language before first paint -->
     <script is:inline>
       (function () {
+        // Theme
         const theme = localStorage.getItem("theme");
         if (theme === "light") document.documentElement.classList.add("light");
+
+        // Language: seed localStorage on first visit using the browser's navigator.language.
+        if (!localStorage.getItem("lang")) {
+          const browserLang = (navigator.language || "").split("-")[0].toLowerCase();
+          localStorage.setItem("lang", browserLang === "es" ? "es" : "en");
+        }
       })();
     </script>
   </head>

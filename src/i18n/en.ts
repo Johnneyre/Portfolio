@@ -2,12 +2,12 @@ import type { Translations } from '../types/translations';
 
 export const en: Translations = {
   meta: {
-    title: 'Johnneyre Zambrano — FullStack Developer',
+    title: 'Johnneyre Zambrano — Full Stack Developer',
     description: '3+ years building scalable web applications. Specialist in Vue.js, TypeScript and modular architectures.',
   },
   owner: {
     name: 'Johnneyre Zambrano',
-    role: 'FullStack Developer',
+    role: 'Full Stack Developer',
   },
   nav: {
     experience: 'Experience',
@@ -22,8 +22,8 @@ export const en: Translations = {
   },
   hero: {
     greeting: "Hi, I'm",
-    role: 'FullStack Developer',
-    bio: '3+ years building high-performance web apps. I specialize in clean interfaces, modular architectures, and scalable code.',
+    role: 'Full Stack Developer',
+    bio: '3+ years building scalable web applications for critical sectors like insurance and e-commerce. I focus on performance, modular architectures, and maintainable code.',
     cta_projects: 'View projects',
     cta_contact: 'Contact me',
     available: 'Available for new opportunities',
@@ -55,12 +55,13 @@ export const en: Translations = {
   timeline_items: {
     linktic: {
       period: 'August 2023 – Present',
-      role: 'FullStack Developer',
+      role: 'Full Stack Developer',
       bullets: [
-        'Built interactive interfaces and components for an insurance management system using Vue.js and Pinia. Developed critical data visualizations consuming the Spring Boot actuator, enabling real-time monitoring of logs, cronjobs and microservice metrics.',
-        'Led the frontend refactoring by implementing Screaming Architecture for modular division, significantly improving the scalability and maintainability of the product.',
-        'Implemented features for the Minegos E-commerce in products, categories, configuration and reports modules, improving the management experience for sellers and streamlining the purchase process.',
-        'Developed reusable components with Vue.js and TypeScript for an Electronic Document Management System (SGDEA), collaborating with requirements analysts and QA.',
+        'Led the frontend refactoring of the Seguros Andina insurance management system by migrating to Screaming Architecture, drastically improving maintainability and scalability. Implemented conditional dynamic routing for differentiated deployments per environment (DEV, QA, UAT, PROD).',
+        'Developed backend logic with Java Spring Boot to manage UI-configurable maintenance windows, with database persistence and real-time notifications via WebSockets and CronJobs. Integrated the BroadcastChannel API to maintain state consistency across multiple browser tabs.',
+        'Reduced initial load time by 40% through bundle analysis, critical font pre-fetching, and static asset optimization.',
+        'Built modular, reusable components with Vue.js, TypeScript and Quasar for the SGDEA (Electronic Document Archive Management System), applying complex validations and insurance domain business logic.',
+        'Designed the data model and CRUD operations for the Minegos E-commerce using Drizzle ORM, and implemented the public storefront with a shopping cart and advanced search filters.',
         'Worked in an agile environment under Scrum using Azure DevOps for sprint management, user stories and bug resolution.',
       ],
     },
@@ -76,19 +77,19 @@ export const en: Translations = {
   project_items: {
     sgdea: {
       title: 'SGDEA',
-      description: 'Electronic Document Archive Management System. Reusable components in Vue.js and TypeScript, following business rules defined with analysts and QA.',
+      description: 'Electronic Document Archive Management System built for the insurance sector. Developed with Vue.js, TypeScript and Quasar, featuring modular and reusable components with complex domain-specific validations and business logic. Collaborative work with requirements analysts and QA under Scrum methodology.',
     },
     'insurance-system': {
       title: 'Insurance Management System',
-      description: 'Dashboard with real-time data visualization consuming the Spring Boot actuator: logs, cronjobs and active microservice metrics.',
+      description: 'Insurance management platform with a frontend refactored to Screaming Architecture for maximum scalability. Features environment-based dynamic routing (DEV/QA/UAT/PROD), UI-configurable maintenance windows with real-time WebSocket notifications, and a 40% reduction in initial load time through bundle analysis and asset optimization.',
     },
     minegos: {
       title: 'Minegos E-commerce',
-      description: 'Improvements in products, categories, configuration and reports modules. Optimizing the experience for sellers and buyers.',
+      description: 'E-commerce platform with a full admin panel and public storefront. Data model and CRUD operations built with Drizzle ORM, including a shopping cart, advanced search filters, and autonomous management of products, categories and Linktree-style link configuration.',
     },
     'hours-control': {
       title: 'Hours Control',
-      description: 'Responsive web system for university employee hours tracking. Automation of repetitive tasks and real-time supervision for management.',
+      description: 'Responsive web system for university employee hours tracking, built collaboratively. Automated repetitive tasks achieving a 30% increase in staff performance, and enabled real-time activity monitoring for management.',
     },
   },
   skill_categories: {

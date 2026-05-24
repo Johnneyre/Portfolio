@@ -33,8 +33,8 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
 
   <!-- Main content — centered vertically -->
   <div
-    class="flex items-center justify-center container-max relative z-10"
-    style="height: 100%; padding-top: calc(var(--header-height) + 2rem); padding-bottom: 5rem;"
+    class="flex items-center justify-center container-max relative z-10 pb-28 md:pb-20"
+    style="height: 100%; padding-top: calc(var(--header-height) + 2rem);"
   >
     <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-32">
       <!-- Left: text -->
@@ -130,7 +130,7 @@ const githubLink = SOCIAL_LINKS.find((l) => l.icon === "github")!;
   </div>
 
   <!-- Scroll indicator — pinned at bottom center -->
-  <div class="hero-enter-4 absolute bottom-8 inset-x-0 z-10 flex justify-center">
+  <div class="hero-enter-4 absolute bottom-3 md:bottom-8 inset-x-0 z-10 flex justify-center">
     <a href="#experience" class="flex flex-col items-center gap-1.5" style="text-decoration: none;">
       <span
         class="text-xs font-bold tracking-widest uppercase"

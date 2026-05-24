@@ -71,9 +71,14 @@
   }
 
   function toggleTheme(): void {
+    root.classList.add("theme-transitioning");
     root.classList.toggle(LIGHT_CLASS);
     localStorage.setItem(THEME_KEY, isLight() ? "light" : "dark");
     syncIcons();
+
+    setTimeout(() => {
+      root.classList.remove("theme-transitioning");
+    }, 300);
   }
 
   syncIcons();

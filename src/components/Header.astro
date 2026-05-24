@@ -16,9 +16,7 @@ const t = useTranslations(locale);
 <header class="header-glass sticky top-0 z-50 transition-shadow">
   <nav class="container-max flex items-center justify-between py-4 px-5">
     <!-- Logo -->
-    <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text">
-      JZ
-    </a>
+    <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text"> JZ </a>
 
     <!-- Desktop nav links -->
     <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
@@ -74,7 +72,8 @@ const t = useTranslations(locale);
   <!-- Mobile menu -->
   <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" />
   <div
-    class="peer-checked:flex hidden flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50"
+    id="mobile-menu"
+    class="flex flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50 opacity-0 invisible -translate-y-2 transition-all duration-300 ease-in-out peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0"
     style="border-color: var(--color-surface-700); background: var(--color-surface-900, var(--color-bg));"
   >
     <a href="#experience" class="nav-link link-hover font-medium py-1" data-i18n="nav.experience">
@@ -101,4 +100,16 @@ const t = useTranslations(locale);
     window.scrollTo(0, 0);
   }
   updateHeader();
+
+  // Close mobile menu when a section link is clicked
+  const menuToggle = document.getElementById("mobile-menu-toggle") as HTMLInputElement | null;
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (menuToggle && mobileMenu) {
+    const links = mobileMenu.querySelectorAll("a");
+    links.forEach((link) => {
+      link.addEventListener("click", () => {
+        menuToggle.checked = false;
+      });
+    });
+  }
 </script>

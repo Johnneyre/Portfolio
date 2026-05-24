@@ -461,3 +461,15 @@ body {
   color: var(--color-text-secondary);
   line-height: 1.2;
 }
+
+/* ─── Theme Transition ──────────────────────────────────────── */
+.theme-transitioning,
+.theme-transitioning * {
+  transition:
+    background-color 0.3s ease !important,
+    border-color 0.3s ease !important,
+    color 0.3s ease !important,
+    fill 0.3s ease !important,
+    stroke 0.3s ease !important,
+    box-shadow 0.3s ease !important;
+}

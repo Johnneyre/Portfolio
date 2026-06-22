@@ -37,16 +37,21 @@ export const TIMELINE_ITEMS: readonly TimelineItem[] = [
 
 export const PROJECT_ITEMS: readonly ProjectItem[] = [
   {
-    id: 'sgdea',
+    id: 'image-optimize-webgpu',
+    accent: 215,
+    liveUrl: 'https://webgpu-image-optimizer.com/',
+    repoUrl: 'https://github.com/Johnneyre/image-optimizer-web-gpu',
     tags: [
-      { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
+      { id: 'angular', devicon: 'devicon-angular-plain colored' },
       { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
-      { id: 'pinia', devicon: 'devicon-pinia-plain colored' },
-      { id: 'rest-api', devicon: 'devicon-fastapi-plain colored' },
+      { id: 'webgpu', devicon: '' },
+      { id: 'tailwindcss', devicon: 'devicon-tailwindcss-plain colored' },
     ],
   },
   {
     id: 'insurance-system',
+    accent: 255,
+    concept: 'shield',
     tags: [
       { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
       { id: 'pinia', devicon: 'devicon-pinia-plain colored' },
@@ -56,6 +61,8 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
   },
   {
     id: 'minegos',
+    accent: 300,
+    concept: 'cart',
     tags: [
       { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
       { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
@@ -64,6 +71,8 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
   },
   {
     id: 'hours-control',
+    accent: 70,
+    concept: 'clock',
     tags: [
       { id: 'javascript', devicon: 'devicon-javascript-plain colored' },
       { id: 'html5', devicon: 'devicon-html5-plain colored' },

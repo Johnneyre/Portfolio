@@ -1,0 +1,16 @@
+export type IconName =
+  | 'linkedin'
+  | 'github'
+  | 'email'
+  | 'arrow-down'
+  | 'briefcase'
+  | 'graduation'
+  | 'calendar'
+  | 'pinia'
+  | 'menu'
+  | 'globe'
+  | 'chevron-down'
+  | 'webgpu'
+  | 'shield'
+  | 'cart'
+  | 'clock';

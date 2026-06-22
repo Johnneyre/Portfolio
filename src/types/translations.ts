@@ -37,6 +37,8 @@ export interface Translations {
   projects: {
     label: string;
     title: string;
+    demo: string;
+    code: string;
   };
   skills: {
     label: string;

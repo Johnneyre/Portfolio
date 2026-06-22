@@ -1,3 +1,5 @@
+import type { IconName } from './icons';
+
 export interface TechTag {
   readonly id: string;
   readonly devicon: string; // devicon class name e.g. "devicon-vuejs-plain"
@@ -34,4 +36,12 @@ export interface TimelineItem {
 export interface ProjectItem {
   readonly id: string;
   readonly tags: readonly TechTag[];
+  /** Optional live demo URL. When present, a "demo" button is rendered. */
+  readonly liveUrl?: string;
+  /** Optional source code URL. When present, a "code" button is rendered. */
+  readonly repoUrl?: string;
+  /** Accent hue (OKLCh degrees) used to tint the project's cover backdrop. */
+  readonly accent?: number;
+  /** Concept icon for the generated cover when there is no screenshot. */
+  readonly concept?: IconName;
 }

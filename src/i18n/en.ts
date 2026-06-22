@@ -39,6 +39,8 @@ export const en: Translations = {
   projects: {
     label: 'Featured work',
     title: 'Projects',
+    demo: 'Live demo',
+    code: 'Source',
   },
   skills: {
     label: 'Tech stack',
@@ -75,9 +77,10 @@ export const en: Translations = {
     },
   },
   project_items: {
-    sgdea: {
-      title: 'SGDEA',
-      description: 'Electronic Document Archive Management System built for the insurance sector. Developed with Vue.js, TypeScript and Quasar, featuring modular and reusable components with complex domain-specific validations and business logic. Collaborative work with requirements analysts and QA under Scrum methodology.',
+    'image-optimize-webgpu': {
+      title: 'WebGPU Image Optimizer',
+      description:
+        'Image compressor running 100% in the browser: adjusts brightness and contrast on the GPU with a WebGPU compute shader (WGSL) and re-encodes to WebP or JPEG inside a Web Worker. No servers, no uploads — full privacy and parallel GPU processing. Built with Angular 21 (standalone + signals) and deployed on Cloudflare.',
     },
     'insurance-system': {
       title: 'Insurance Management System',
@@ -100,6 +103,8 @@ export const en: Translations = {
   skill_labels: {
     typescript: 'TypeScript',
     javascript: 'JavaScript',
+    angular: 'Angular',
+    webgpu: 'WebGPU',
     vuejs: 'Vue.js',
     sveltekit: 'SvelteKit',
     html5: 'HTML5',

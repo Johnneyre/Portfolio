@@ -462,6 +462,11 @@ body {
   line-height: 1.2;
 }
 
+/* Devicon ships the modern Angular glyph as white (.colored = #fff); tint it the Angular brand red. */
+i.devicon-angular-plain.colored {
+  color: #dd0031;
+}
+
 /* ─── Projects grid ─────────────────────────────────────────── */
 .proj-card {
   overflow: hidden;
@@ -493,8 +498,7 @@ body {
     linear-gradient(150deg, oklch(94% 0.05 var(--accent-h)), oklch(86% 0.07 var(--accent-h)));
 }
 
-/* When the cover links to the live demo, keep it visually identical but
-   clickable, with an accent focus ring for keyboard users. */
+/* Cover-as-link: visually identical to the div, with an accent focus ring for keyboard users. */
 a.proj-cover {
   text-decoration: none;
   color: inherit;
@@ -607,17 +611,14 @@ a.proj-cover:focus-visible {
   line-height: 1;
 }
 
-/* Hover zoom: the whole framed shot (browser frame + screenshot) or the
-   concept panel scales as a single unit when its card is hovered — so the
-   screenshot and its frame move together instead of the image alone. */
+/* Hover zoom: the framed shot or concept panel scales as a single unit, so frame and image move together. */
 .proj-shot,
 .proj-gen {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
-/* Anchor the framed shot to the bottom edge so it grows upward into the
-   backdrop instead of overflowing below the cover. */
+/* Anchor the framed shot to the bottom edge so it grows upward into the backdrop, not below the cover. */
 .proj-shot {
   transform-origin: center bottom;
 }

@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { PROJECT_ITEMS } from '../data/portfolio';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, sectionId } from '../i18n/utils';
 import type { SupportedLocale } from '../i18n/utils';
 import DecorativeBlobs from './DecorativeBlobs.astro';
 import Icon from './Icon.astro';
@@ -26,34 +26,30 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
 ---
 
 <section
-  id="projects"
+  id={sectionId(locale, 'projects')}
   class="relative section-padding overflow-hidden"
 >
   <DecorativeBlobs variant="subtle" />
 
   <div class="container-max relative z-10">
 
-    <!-- Section header -->
     <div class="reveal mb-12">
       <p
         class="text-sm font-semibold tracking-widest uppercase mb-3"
         style="color: var(--color-brand-400);"
-        data-i18n="projects.label"
       >
         {t.projects.label}
       </p>
-      <h2 class="text-section-title" style="color: var(--color-text-primary);" data-i18n="projects.title">
+      <h2 class="text-section-title" style="color: var(--color-text-primary);">
         {t.projects.title}
       </h2>
     </div>
 
-    <!-- Grid of project cards -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       {PROJECT_ITEMS.map((project, idx) => {
         const tItem = t.project_items[project.id as keyof typeof t.project_items];
         const image = PROJECT_IMAGES[project.id];
         const hasLinks = Boolean(project.liveUrl || project.repoUrl);
-        // Make the cover a link to the live demo when one exists.
         const coverIsLink = Boolean(project.liveUrl);
         const CoverTag = coverIsLink ? 'a' : 'div';
         const coverProps = coverIsLink
@@ -69,8 +65,7 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
             class={`reveal ${idx % 2 === 0 ? 'reveal-from-left' : 'reveal-from-right'} reveal-delay-${Math.min(idx + 1, 4)} proj-card card flex flex-col`}
             style={`--accent-h: ${project.accent ?? 155}`}
           >
-            <!-- Cover: framed screenshot or generated concept preview.
-                 Links to the live demo when the project has one. -->
+            <!-- Cover: framed screenshot or generated concept preview; links to the live demo when present. -->
             <CoverTag class={`proj-cover ${image ? 'proj-cover--shot' : 'proj-cover--gen'}`} {...coverProps}>
               {image ? (
                 <div class="proj-shot">
@@ -97,10 +92,7 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
                   {project.concept && (
                     <Icon name={project.concept} size={40} class="proj-gen__concept" />
                   )}
-                  <span
-                    class="proj-gen__title"
-                    data-i18n={`project_items.${project.id}.title`}
-                  >
+                  <span class="proj-gen__title">
                     {tItem.title}
                   </span>
                   <div class="proj-gen__logos">
@@ -118,15 +110,13 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
               )}
             </CoverTag>
 
-            <!-- Body -->
             <div class="p-6 flex flex-col gap-4 flex-1">
-              <h3 class="text-lg font-bold m-0" style="color: var(--color-text-primary);" data-i18n={`project_items.${project.id}.title`}>
+              <h3 class="text-lg font-bold m-0" style="color: var(--color-text-primary);">
                 {tItem.title}
               </h3>
               <p
                 class="text-sm leading-relaxed m-0 flex-1"
                 style="color: var(--color-text-secondary);"
-                data-i18n={`project_items.${project.id}.description`}
               >
                 {tItem.description}
               </p>
@@ -158,7 +148,7 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
                       style={linkBtnStyle}
                     >
                       <Icon name="globe" size={16} aria-hidden="true" />
-                      <span data-i18n="projects.demo">{t.projects.demo}</span>
+                      <span>{t.projects.demo}</span>
                     </a>
                   )}
                   {project.repoUrl && (
@@ -171,7 +161,7 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
                       style={linkBtnStyle}
                     >
                       <Icon name="github" size={16} aria-hidden="true" />
-                      <span data-i18n="projects.code">{t.projects.code}</span>
+                      <span>{t.projects.code}</span>
                     </a>
                   )}
                 </div>

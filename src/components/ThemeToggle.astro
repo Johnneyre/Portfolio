@@ -5,7 +5,7 @@
   class="flex items-center justify-center w-9 h-9 rounded-lg border transition-colors duration-200"
   style="border-color: var(--color-surface-700); background: var(--color-header-buttons);"
 >
-  <!-- Moon icon (dark mode active) — soft purple fill -->
+  <!-- Shown in dark mode -->
   <svg
     id="icon-moon"
     xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@
     <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path>
   </svg>
 
-  <!-- Sun icon (light mode active) — soft amber/yellow fill -->
+  <!-- Shown in light mode -->
   <svg
     id="icon-sun"
     xmlns="http://www.w3.org/2000/svg"
@@ -50,24 +50,16 @@
 <script>
   const THEME_KEY = "theme";
   const LIGHT_CLASS = "light";
-
   const root = document.documentElement;
-  const btn = document.getElementById("theme-toggle")!;
-  const moon = document.getElementById("icon-moon")!;
-  const sun = document.getElementById("icon-sun")!;
 
-  function isLight(): boolean {
-    return root.classList.contains(LIGHT_CLASS);
-  }
+  const isLight = (): boolean => root.classList.contains(LIGHT_CLASS);
 
   function syncIcons(): void {
-    if (isLight()) {
-      moon.classList.add("hidden");
-      sun.classList.remove("hidden");
-    } else {
-      sun.classList.add("hidden");
-      moon.classList.remove("hidden");
-    }
+    const moon = document.getElementById("icon-moon");
+    const sun = document.getElementById("icon-sun");
+    if (!moon || !sun) return;
+    moon.classList.toggle("hidden", isLight());
+    sun.classList.toggle("hidden", !isLight());
   }
 
   function toggleTheme(): void {
@@ -75,12 +67,12 @@
     root.classList.toggle(LIGHT_CLASS);
     localStorage.setItem(THEME_KEY, isLight() ? "light" : "dark");
     syncIcons();
-
-    setTimeout(() => {
-      root.classList.remove("theme-transitioning");
-    }, 300);
+    setTimeout(() => root.classList.remove("theme-transitioning"), 300);
   }
 
-  syncIcons();
-  btn.addEventListener("click", toggleTheme);
+  // Re-bind on first load and after every navigation (the button is swapped).
+  document.addEventListener("astro:page-load", () => {
+    syncIcons();
+    document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
+  });
 </script>

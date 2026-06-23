@@ -106,7 +106,7 @@ export const es: Translations = {
     angular: 'Angular',
     webgpu: 'WebGPU',
     vuejs: 'Vue.js',
-    sveltekit: 'SvelteKit',
+    svelte: 'Svelte',
     html5: 'HTML5',
     css3: 'CSS3',
     tailwindcss: 'TailwindCSS',

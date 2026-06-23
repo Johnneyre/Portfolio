@@ -1,5 +1,5 @@
 ---
-import { useTranslations, getLocalePath } from "../i18n/utils";
+import { useTranslations, getLocalePath, sectionId } from "../i18n/utils";
 import type { SupportedLocale } from "../i18n/utils";
 import ThemeToggle from "./ThemeToggle.astro";
 import LangSwitcher from "./LangSwitcher.astro";
@@ -15,16 +15,13 @@ const t = useTranslations(locale);
 
 <header class="header-glass sticky top-0 z-50 transition-shadow">
   <nav class="container-max flex items-center justify-between py-4 px-5">
-    <!-- Logo -->
     <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text"> JZ </a>
 
-    <!-- Desktop nav links -->
     <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
       <li>
         <a
-          href="#experience"
+          href={`#${sectionId(locale, "experience")}`}
           class="nav-link link-hover font-medium"
-          data-i18n="nav.experience"
           style="font-size: 15.5px;"
         >
           {t.nav.experience}
@@ -32,9 +29,8 @@ const t = useTranslations(locale);
       </li>
       <li>
         <a
-          href="#projects"
+          href={`#${sectionId(locale, "projects")}`}
           class="nav-link link-hover font-medium"
-          data-i18n="nav.projects"
           style="font-size: 15.5px;"
         >
           {t.nav.projects}
@@ -42,9 +38,8 @@ const t = useTranslations(locale);
       </li>
       <li>
         <a
-          href="#skills"
+          href={`#${sectionId(locale, "skills")}`}
           class="nav-link link-hover font-medium"
-          data-i18n="nav.skills"
           style="font-size: 15.5px;"
         >
           {t.nav.skills}
@@ -52,12 +47,10 @@ const t = useTranslations(locale);
       </li>
     </ul>
 
-    <!-- Right: lang switcher + theme toggle -->
     <div class="flex items-center gap-3">
       <LangSwitcher />
       <ThemeToggle />
 
-      <!-- Mobile hamburger -->
       <label
         class="md:hidden cursor-pointer"
         for="mobile-menu-toggle"
@@ -69,47 +62,56 @@ const t = useTranslations(locale);
     </div>
   </nav>
 
-  <!-- Mobile menu -->
   <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" />
   <div
     id="mobile-menu"
     class="flex flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50 opacity-0 invisible -translate-y-2 transition-all duration-300 ease-in-out peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0"
     style="border-color: var(--color-surface-700); background: var(--color-surface-900, var(--color-bg));"
   >
-    <a href="#experience" class="nav-link link-hover font-medium py-1" data-i18n="nav.experience">
+    <a
+      href={`#${sectionId(locale, "experience")}`}
+      class="nav-link link-hover font-medium py-1"
+    >
       {t.nav.experience}
     </a>
-    <a href="#projects" class="nav-link link-hover font-medium py-1" data-i18n="nav.projects">
+    <a
+      href={`#${sectionId(locale, "projects")}`}
+      class="nav-link link-hover font-medium py-1"
+    >
       {t.nav.projects}
     </a>
-    <a href="#skills" class="nav-link link-hover font-medium py-1" data-i18n="nav.skills">
+    <a
+      href={`#${sectionId(locale, "skills")}`}
+      class="nav-link link-hover font-medium py-1"
+    >
       {t.nav.skills}
     </a>
   </div>
 </header>
 
 <script>
-  const header = document.querySelector(".header-glass") as HTMLElement | null;
+  // Scroll listener stays on window (persists across view transitions); the header is re-queried per navigation (it's swapped).
+  let header: HTMLElement | null = null;
+
   function updateHeader(): void {
     header?.classList.toggle("is-scrolled", window.scrollY > 40);
   }
   window.addEventListener("scroll", updateHeader, { passive: true });
 
-  // Ensure header starts transparent on page load
-  if (window.location.hash === "" || window.location.hash === "#inicio") {
-    window.scrollTo(0, 0);
-  }
-  updateHeader();
+  function initHeader(): void {
+    header = document.querySelector(".header-glass");
+    updateHeader();
 
-  // Close mobile menu when a section link is clicked
-  const menuToggle = document.getElementById("mobile-menu-toggle") as HTMLInputElement | null;
-  const mobileMenu = document.getElementById("mobile-menu");
-  if (menuToggle && mobileMenu) {
-    const links = mobileMenu.querySelectorAll("a");
-    links.forEach((link) => {
+    // Close the mobile menu when a section link is tapped.
+    const menuToggle = document.getElementById("mobile-menu-toggle") as HTMLInputElement | null;
+    const mobileMenu = document.getElementById("mobile-menu");
+    mobileMenu?.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
-        menuToggle.checked = false;
+        if (menuToggle) menuToggle.checked = false;
       });
     });
   }
+
+  // Runs on first load and after every client navigation.
+  document.addEventListener("astro:page-load", initHeader);
 </script>

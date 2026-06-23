@@ -16,3 +16,16 @@ export function getLocalePath(locale: SupportedLocale, path = ''): string {
 }
 
 export const SUPPORTED_LOCALES: readonly SupportedLocale[] = ['es', 'en'] as const;
+
+export type SectionKey = 'home' | 'experience' | 'projects' | 'skills';
+
+// Section anchor slugs, localized per language (e.g. "#inicio" vs "#start").
+const SECTION_SLUGS: Record<SupportedLocale, Record<SectionKey, string>> = {
+  es: { home: 'inicio', experience: 'experiencia', projects: 'proyectos', skills: 'skills' },
+  en: { home: 'start', experience: 'experience', projects: 'projects', skills: 'skills' },
+};
+
+/** Locale-aware id/anchor slug for a page section. */
+export function sectionId(locale: SupportedLocale, key: SectionKey): string {
+  return SECTION_SLUGS[locale][key];
+}

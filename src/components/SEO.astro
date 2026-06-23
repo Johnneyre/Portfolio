@@ -2,6 +2,7 @@
 import type { SupportedLocale } from "../i18n/utils";
 import { useTranslations } from "../i18n/utils";
 import { SOCIAL_LINKS } from "../data/portfolio";
+import { en } from "../i18n/en";
 
 interface Props {
   locale: SupportedLocale;
@@ -11,13 +12,28 @@ interface Props {
 const { locale, canonicalUrl } = Astro.props;
 const t = useTranslations(locale);
 
-const siteUrl = import.meta.env.SITE || "https://johnneyrez.dev";
-const currentUrl = canonicalUrl || new URL(Astro.url.pathname, siteUrl).href;
+// Single source of truth for the host (trailing slash normalized away).
+const siteUrl = (import.meta.env.SITE ?? "https://johnneyrez.dev").replace(/\/$/, "");
+const esUrl = `${siteUrl}/`;
+const enUrl = `${siteUrl}/en/`;
+const currentUrl = canonicalUrl ?? (locale === "es" ? esUrl : enUrl);
+
+const ogImage = `${siteUrl}/og-image.png`;
+const ogLocale = locale === "es" ? "es_ES" : "en_US";
+const ogLocaleAlternate = locale === "es" ? "en_US" : "es_ES";
+const imageAlt = `${t.owner.name} – ${t.owner.role}`;
 
 const linkedinUrl = SOCIAL_LINKS.find((l) => l.icon === "linkedin")?.href;
 const githubUrl = SOCIAL_LINKS.find((l) => l.icon === "github")?.href;
 
-// JSON-LD structured data
+// Every technology shown on the page (kept in sync via skill_labels) plus the focus areas from the bio.
+const knowsAbout = [
+  ...Object.values(en.skill_labels),
+  "Full-Stack Web Development",
+  "Web Performance Optimization",
+  "Scalable Web Architecture",
+];
+
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -26,15 +42,7 @@ const personSchema = {
   description: t.meta.description,
   url: siteUrl,
   sameAs: [linkedinUrl, githubUrl].filter(Boolean),
-  knowsAbout: [
-    "Vue.js",
-    "TypeScript",
-    "JavaScript",
-    "Front-End Development",
-    "Web Development",
-    "TailwindCSS",
-    "Pinia",
-  ],
+  knowsAbout,
 };
 
 const websiteSchema = {
@@ -51,18 +59,36 @@ const websiteSchema = {
 };
 ---
 
-<!-- Canonical URL -->
 <link rel="canonical" href={currentUrl} />
 
-<!-- Hreflang for multi-language -->
-<link rel="alternate" hreflang="es" href={siteUrl} />
-<link rel="alternate" hreflang="en" href={`${siteUrl}`} />
-<link rel="alternate" hreflang="x-default" href={siteUrl} />
+<!-- Hreflang: reciprocal, distinct per-locale URLs -->
+<link rel="alternate" hreflang="es" href={esUrl} />
+<link rel="alternate" hreflang="en" href={enUrl} />
+<link rel="alternate" hreflang="x-default" href={esUrl} />
 
-<!-- Additional SEO meta tags -->
 <meta name="robots" content="index, follow" />
 <meta name="googlebot" content="index, follow" />
 <meta name="theme-color" content="#0a0a0a" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={t.owner.name} />
+<meta property="og:title" content={t.meta.title} />
+<meta property="og:description" content={t.meta.description} />
+<meta property="og:url" content={currentUrl} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:locale:alternate" content={ogLocaleAlternate} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={imageAlt} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={t.meta.title} />
+<meta name="twitter:description" content={t.meta.description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />

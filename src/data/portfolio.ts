@@ -85,12 +85,12 @@ export const SKILL_CATEGORIES: readonly SkillCategory[] = [
   {
     id: 'languages-frameworks',
     skills: [
+      { id: 'angular', devicon: 'devicon-angular-plain colored' },
+      { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
+      { id: 'astro', devicon: 'devicon-astro-plain colored' },
+      { id: 'svelte', devicon: 'devicon-svelte-plain colored' },
       { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
       { id: 'javascript', devicon: 'devicon-javascript-plain colored' },
-      { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
-      { id: 'sveltekit', devicon: 'devicon-svelte-plain colored' },
-      { id: 'html5', devicon: 'devicon-html5-plain colored' },
-      { id: 'css3', devicon: 'devicon-css3-plain colored' },
     ],
   },
   {
@@ -110,7 +110,6 @@ export const SKILL_CATEGORIES: readonly SkillCategory[] = [
       { id: 'azure-devops', devicon: 'devicon-azuredevops-plain colored' },
       { id: 'supabase', devicon: 'devicon-supabase-plain colored' },
       { id: 'pinia', devicon: 'devicon-pinia-plain colored' },
-      { id: 'astro', devicon: 'devicon-astro-plain colored' },
     ],
   },
 ] as const;

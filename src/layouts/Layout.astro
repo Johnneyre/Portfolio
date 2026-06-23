@@ -4,8 +4,7 @@ import Header from "../components/Header.astro";
 import SEO from "../components/SEO.astro";
 import type { SupportedLocale } from "../i18n/utils";
 import { useTranslations } from "../i18n/utils";
-import { es } from "../i18n/es";
-import { en } from "../i18n/en";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   locale?: SupportedLocale;
@@ -16,8 +15,6 @@ const t = useTranslations(locale);
 
 const title = t.meta.title;
 const description = t.meta.description;
-
-const translationsJson = JSON.stringify({ es, en });
 ---
 
 <!doctype html>
@@ -30,10 +27,11 @@ const translationsJson = JSON.stringify({ es, en });
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- SEO Component -->
     <SEO locale={locale} />
 
-    <!-- Google Fonts: Inter -->
+    <!-- View transitions: switch locales without a full page reload -->
+    <ClientRouter />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,7 +39,6 @@ const translationsJson = JSON.stringify({ es, en });
       rel="stylesheet"
     />
 
-    <!-- Devicons for tech icons -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
     <link
@@ -51,17 +48,22 @@ const translationsJson = JSON.stringify({ es, en });
 
     <title>{title}</title>
 
-    <!-- Anti-FOUC: apply saved theme and language before first paint -->
+    <!-- Anti-FOUC: set theme before first paint and after each view transition; route first-time visitors to their browser language. -->
     <script is:inline>
       (function () {
-        // Theme
-        const theme = localStorage.getItem("theme");
-        if (theme === "light") document.documentElement.classList.add("light");
+        const applyTheme = () =>
+          document.documentElement.classList.toggle(
+            "light",
+            localStorage.getItem("theme") === "light",
+          );
+        applyTheme();
+        document.addEventListener("astro:after-swap", applyTheme);
 
-        // Language: seed localStorage on first visit using the browser's navigator.language.
         if (!localStorage.getItem("lang")) {
-          const browserLang = (navigator.language || "").split("-")[0].toLowerCase();
-          localStorage.setItem("lang", browserLang === "es" ? "es" : "en");
+          const pref = (navigator.language || "").slice(0, 2).toLowerCase() === "es" ? "es" : "en";
+          localStorage.setItem("lang", pref);
+          const onEn = location.pathname === "/en" || location.pathname.indexOf("/en/") === 0;
+          if (pref === "en" && !onEn) location.replace("/en/");
         }
       })();
     </script>
@@ -84,75 +86,31 @@ const translationsJson = JSON.stringify({ es, en });
       <slot />
     </main>
 
-    <!-- All translations embedded for client-side switching -->
-    <script is:inline define:vars={{ translationsJson }}>
-      window.__T__ = JSON.parse(translationsJson);
-    </script>
-
-    <!-- Client-side i18n engine -->
     <script>
-      type Lang = "es" | "en";
-
-      function getByPath(obj: Record<string, unknown>, path: string): string {
-        return path.split(".").reduce<unknown>((acc, key) => {
-          if (acc && typeof acc === "object") return (acc as Record<string, unknown>)[key];
-          return undefined;
-        }, obj) as string;
+      function setupReveal() {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+        );
+        document
+          .querySelectorAll(".reveal:not(.is-visible)")
+          .forEach((el) => observer.observe(el));
       }
 
-      function applyLang(lang: Lang): void {
-        const t = (window as unknown as { __T__: Record<Lang, Record<string, unknown>> }).__T__[
-          lang
-        ];
-        if (!t) return;
+      // Fires on initial load and after every client navigation.
+      document.addEventListener("astro:page-load", setupReveal);
 
-        document.documentElement.lang = lang;
-
-        // Simple text replacements
-        document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((el) => {
-          const key = el.getAttribute("data-i18n")!;
-          const val = getByPath(t, key);
-          if (val !== undefined) el.textContent = String(val);
-        });
-
-        // Bullet list replacements: data-i18n-bullets="timeline_items.0.bullets"
-        document.querySelectorAll<HTMLElement>("[data-i18n-bullets]").forEach((container) => {
-          const key = container.getAttribute("data-i18n-bullets")!;
-          const bullets = getByPath(t, key) as unknown as string[];
-          if (!Array.isArray(bullets)) return;
-          const paragraphs = container.querySelectorAll<HTMLElement>("li p");
-          bullets.forEach((text, i) => {
-            if (paragraphs[i]) paragraphs[i].textContent = text;
-          });
-        });
-      }
-
-      // Apply on load
-      const savedLang = (localStorage.getItem("lang") || "es") as Lang;
-      if (savedLang !== "es") applyLang(savedLang);
-
-      // Listen for language change events from LangSwitcher
-      window.addEventListener("lang-change", (e) => {
-        const lang = (e as CustomEvent<{ lang: Lang }>).detail.lang;
-        applyLang(lang);
+      // On navigation, reveal everything at once so the view transition is the only animation.
+      document.addEventListener("astro:after-swap", () => {
+        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-visible"));
       });
-    </script>
-
-    <!-- Intersection Observer for .reveal animations -->
-    <script>
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
-      );
-
-      document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
     </script>
   </body>
 </html>

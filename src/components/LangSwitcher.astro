@@ -1,6 +1,6 @@
 ---
 import Icon from "./Icon.astro";
-// Client-side only – no locale prop needed
+// Client-side only – language is derived from the server-rendered <html lang>.
 ---
 
 <div class="relative" id="lang-switcher">
@@ -17,7 +17,6 @@ import Icon from "./Icon.astro";
     </span>
   </button>
 
-  <!-- Dropdown -->
   <div
     id="lang-dropdown"
     class="lang-dropdown absolute right-0 mt-1.5 rounded-xl border shadow-xl overflow-hidden hidden"
@@ -28,79 +27,77 @@ import Icon from "./Icon.astro";
       z-index: 100;
     "
   >
-    <button
+    <a
       class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
       data-lang="es"
-      style="color: var(--color-text-primary);"
+      href="/"
+      style="color: var(--color-text-primary); text-decoration: none;"
     >
       <span>ES</span>
-      <span id="dot-es" class="w-1.5 h-1.5 rounded-full" style="background: var(--color-brand-400);"
-      ></span>
-    </button>
-    <button
+      <span id="dot-es" class="w-1.5 h-1.5 rounded-full" style="background: var(--color-brand-400);"></span>
+    </a>
+    <a
       class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
       data-lang="en"
-      style="color: var(--color-text-primary);"
+      href="/en/"
+      style="color: var(--color-text-primary); text-decoration: none;"
     >
       <span>EN</span>
-      <span
-        id="dot-en"
-        class="w-1.5 h-1.5 rounded-full hidden"
-        style="background: var(--color-brand-400);"></span>
-    </button>
+      <span id="dot-en" class="w-1.5 h-1.5 rounded-full hidden" style="background: var(--color-brand-400);"
+      ></span>
+    </a>
   </div>
 </div>
 
 <script>
-  const btn = document.getElementById("lang-toggle-btn")!;
-  const dropdown = document.getElementById("lang-dropdown")!;
-  const chevron = document.getElementById("lang-chevron")!;
-  const label = document.getElementById("lang-current-label")!;
-  const dotEs = document.getElementById("dot-es")!;
-  const dotEn = document.getElementById("dot-en")!;
+  function initLangSwitcher(): void {
+    const btn = document.getElementById("lang-toggle-btn");
+    const dropdown = document.getElementById("lang-dropdown");
+    const chevron = document.getElementById("lang-chevron");
+    const label = document.getElementById("lang-current-label");
+    const dotEs = document.getElementById("dot-es");
+    const dotEn = document.getElementById("dot-en");
+    if (!btn || !dropdown || !chevron || !label || !dotEs || !dotEn) return;
 
-  let isOpen = false;
+    const setOpen = (open: boolean): void => {
+      dropdown.classList.toggle("hidden", !open);
+      chevron.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
+    };
+    const isOpen = (): boolean => !dropdown.classList.contains("hidden");
 
-  function toggleDropdown(open: boolean): void {
-    isOpen = open;
-    dropdown.classList.toggle("hidden", !open);
-    chevron.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
-  }
+    const current = document.documentElement.lang === "en" ? "en" : "es";
+    label.textContent = current.toUpperCase();
+    dotEs.classList.toggle("hidden", current !== "es");
+    dotEn.classList.toggle("hidden", current !== "en");
 
-  function syncDots(lang: string): void {
-    label.textContent = lang.toUpperCase();
-    if (lang === "es") {
-      dotEs.classList.remove("hidden");
-      dotEn.classList.add("hidden");
-    } else {
-      dotEn.classList.remove("hidden");
-      dotEs.classList.add("hidden");
-    }
-  }
-
-  // Init from localStorage
-  const savedLang = localStorage.getItem("lang") || "es";
-  syncDots(savedLang);
-
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleDropdown(!isOpen);
-  });
-
-  document.querySelectorAll<HTMLButtonElement>(".lang-option").forEach((opt) => {
-    opt.addEventListener("click", () => {
-      const lang = opt.dataset.lang!;
-      localStorage.setItem("lang", lang);
-      syncDots(lang);
-      toggleDropdown(false);
-      // Trigger global language switch
-      window.dispatchEvent(new CustomEvent("lang-change", { detail: { lang } }));
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setOpen(!isOpen());
     });
-  });
 
+    dropdown.querySelectorAll<HTMLAnchorElement>(".lang-option").forEach((opt) => {
+      opt.addEventListener("click", (e) => {
+        const lang = opt.dataset.lang!;
+        localStorage.setItem("lang", lang);
+        if (lang === current) {
+          // Already on this language: don't navigate, just close.
+          e.preventDefault();
+          setOpen(false);
+        }
+      });
+    });
+  }
+
+  // Re-bind element listeners on first load and after every navigation.
+  document.addEventListener("astro:page-load", initLangSwitcher);
+
+  // Close the dropdown on outside click (bound once; document persists).
   document.addEventListener("click", (e) => {
-    if (!document.getElementById("lang-switcher")!.contains(e.target as Node)) {
-      toggleDropdown(false);
+    const sw = document.getElementById("lang-switcher");
+    if (sw && !sw.contains(e.target as Node)) {
+      document.getElementById("lang-dropdown")?.classList.add("hidden");
+      const chev = document.getElementById("lang-chevron");
+      if (chev) chev.style.transform = "rotate(0deg)";
     }
   });
 </script>

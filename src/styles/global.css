@@ -23,6 +23,12 @@
   --header-height: 4.5rem;
 }
 
+/* ─── Motion tokens (shared easing + timing) ────────────────── */
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* signature entrance curve */
+  --reveal-duration: 0.55s;
+}
+
 /* ─── Light mode overrides ─────────────────────────────────── */
 .light {
   --color-surface-950: oklch(99% 0.002 155);
@@ -77,13 +83,26 @@ body {
   }
 }
 
+/* ─── Performance helpers ───────────────────────────────────── */
+/* Skip render for off-screen sections; intrinsic-size avoids scroll jumps. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
+}
+
+/* Pause off-screen blob drift (toggled by JS in Layout). */
+.section-offscreen .blob,
+.section-offscreen .blob-delay {
+  animation-play-state: paused;
+}
+
 /* ─── Scroll Reveal (IntersectionObserver-driven) ───────────── */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translateY(24px);
   transition:
-    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--reveal-duration) var(--ease-out),
+    transform var(--reveal-duration) var(--ease-out);
 }
 .reveal.is-visible {
   opacity: 1;
@@ -92,10 +111,10 @@ body {
 
 /* ─── Directional reveal variants ──────────────────────────── */
 .reveal-from-left {
-  transform: translateX(-50px);
+  transform: translateX(-40px);
 }
 .reveal-from-right {
-  transform: translateX(50px);
+  transform: translateX(40px);
 }
 .reveal-from-left.is-visible,
 .reveal-from-right.is-visible {
@@ -104,19 +123,19 @@ body {
 
 /* stagger helpers (set transition-delay directly) */
 .reveal-delay-1 {
-  transition-delay: 80ms;
+  transition-delay: 60ms;
 }
 .reveal-delay-2 {
-  transition-delay: 160ms;
+  transition-delay: 120ms;
 }
 .reveal-delay-3 {
-  transition-delay: 240ms;
+  transition-delay: 180ms;
 }
 .reveal-delay-4 {
-  transition-delay: 320ms;
+  transition-delay: 240ms;
 }
 .reveal-delay-5 {
-  transition-delay: 400ms;
+  transition-delay: 300ms;
 }
 
 /* ─── Animated Gradient Blob (Hero) ─────────────────────────── */
@@ -291,8 +310,8 @@ body {
 
 .header-glass.is-scrolled {
   background: oklch(9% 0.01 155 / 0.88);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom-color: var(--color-surface-800);
 }
 
@@ -526,6 +545,7 @@ a.proj-cover:focus-visible {
   box-shadow:
     0 22px 48px -14px oklch(18% 0.06 var(--accent-h) / 0.65),
     0 0 0 1px oklch(75% 0.1 var(--accent-h) / 0.25);
+  transform-origin: center bottom; /* hover-zoom grows upward into the backdrop */
 }
 
 .proj-shot__bar {
@@ -614,30 +634,14 @@ a.proj-cover:focus-visible {
 /* Hover zoom: the framed shot or concept panel scales as a single unit, so frame and image move together. */
 .proj-shot,
 .proj-gen {
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: transform;
+  transition: transform 0.5s var(--ease-out);
 }
 
-/* Anchor the framed shot to the bottom edge so it grows upward into the backdrop, not below the cover. */
-.proj-shot {
-  transform-origin: center bottom;
-}
-
+/* Promote only while the hover-zoom runs, not permanently. */
 .proj-card:hover .proj-shot,
 .proj-card:hover .proj-gen {
   transform: scale(1.05);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .proj-shot,
-  .proj-gen {
-    transition: none;
-  }
-
-  .proj-card:hover .proj-shot,
-  .proj-card:hover .proj-gen {
-    transform: none;
-  }
+  will-change: transform;
 }
 
 /* ─── Theme Transition ──────────────────────────────────────── */
@@ -650,4 +654,37 @@ a.proj-cover:focus-visible {
     fill 0.3s ease !important,
     stroke 0.3s ease !important,
     box-shadow 0.3s ease !important;
+}
+
+/* ─── Reduced motion: show final states, no movement ────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-from-left,
+  .reveal-from-right {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .blob,
+  .blob-delay,
+  .bounce-y,
+  .hero-enter-1,
+  .hero-enter-2,
+  .hero-enter-3,
+  .hero-enter-4 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Project cover hover-zoom */
+  .proj-shot,
+  .proj-gen {
+    transition: none !important;
+  }
+  .proj-card:hover .proj-shot,
+  .proj-card:hover .proj-gen {
+    transform: none !important;
+  }
 }

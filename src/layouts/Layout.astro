@@ -104,8 +104,26 @@ const description = t.meta.description;
           .forEach((el) => observer.observe(el));
       }
 
+      // Pause blob drift while its section is off-screen.
+      function setupBlobs() {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              entry.target.classList.toggle("section-offscreen", !entry.isIntersecting);
+            });
+          },
+          { rootMargin: "150px" },
+        );
+        document.querySelectorAll("section").forEach((s) => {
+          if (s.querySelector(".blob, .blob-delay")) io.observe(s);
+        });
+      }
+
       // Fires on initial load and after every client navigation.
-      document.addEventListener("astro:page-load", setupReveal);
+      document.addEventListener("astro:page-load", () => {
+        setupReveal();
+        setupBlobs();
+      });
 
       // On navigation, reveal everything at once so the view transition is the only animation.
       document.addEventListener("astro:after-swap", () => {

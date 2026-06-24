@@ -2,16 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio",
   "compatibility_date": "2025-09-27",
-  "observability": {
-    "enabled": true
-  },
-  "main": "dist/_worker.js/index.js",
-  "compatibility_flags": [
-    "global_fetch_strictly_public",
-    "nodejs_compat"
-  ],
+  // Sitio 100% estático: se sirve como Workers Static Assets, sin Worker SSR.
+  // El HTML prerenderizado y los assets viven en ./dist (output estático de Astro).
   "assets": {
-    "binding": "ASSETS",
-    "directory": "dist"
+    "directory": "./dist"
   }
 }

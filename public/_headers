@@ -1,0 +1,4 @@
+# Assets con hash en el nombre: cache inmutable de 1 año.
+# (Antes lo inyectaba @astrojs/cloudflare; ahora lo gestionamos nosotros.)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,0 +1,11 @@
+# pnpm 11 no ejecuta los scripts de instalación de dependencias sin aprobación
+# explícita (seguridad supply-chain). Estos tres compilan/descargan binarios nativos
+# que este proyecto SÍ necesita:
+#   sharp   -> optimiza las imágenes en build (avif/webp)
+#   esbuild -> bundling de Vite/Astro
+#   workerd -> runtime local de Cloudflare (wrangler dev/deploy)
+# Sin este archivo, `pnpm install` sale con ERR_PNPM_IGNORED_BUILDS y rompe el build.
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true

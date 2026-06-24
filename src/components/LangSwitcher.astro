@@ -88,8 +88,21 @@ import Icon from "./Icon.astro";
     });
   }
 
+  // Reflect the active language before the transition paints.
+  function syncLangVisual(): void {
+    const label = document.getElementById("lang-current-label");
+    const dotEs = document.getElementById("dot-es");
+    const dotEn = document.getElementById("dot-en");
+    if (!label || !dotEs || !dotEn) return;
+    const current = document.documentElement.lang === "en" ? "en" : "es";
+    label.textContent = current.toUpperCase();
+    dotEs.classList.toggle("hidden", current !== "es");
+    dotEn.classList.toggle("hidden", current !== "en");
+  }
+
   // Re-bind element listeners on first load and after every navigation.
   document.addEventListener("astro:page-load", initLangSwitcher);
+  document.addEventListener("astro:after-swap", syncLangVisual);
 
   // Close the dropdown on outside click (bound once; document persists).
   document.addEventListener("click", (e) => {

@@ -75,4 +75,7 @@
     syncIcons();
     document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
   });
+
+  // Sync before the transition paints so the swapped button isn't stale.
+  document.addEventListener("astro:after-swap", syncIcons);
 </script>

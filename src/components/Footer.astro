@@ -42,8 +42,11 @@ const t = useTranslations(locale);
 </footer>
 
 <script>
-  document.addEventListener("astro:page-load", () => {
+  function setFooterYear(): void {
     const el = document.getElementById("footer-year");
     if (el) el.textContent = new Date().getFullYear().toString();
-  });
+  }
+
+  document.addEventListener("astro:page-load", setFooterYear);
+  document.addEventListener("astro:after-swap", setFooterYear);
 </script>

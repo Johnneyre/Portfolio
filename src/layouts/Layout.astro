@@ -18,7 +18,7 @@ const description = t.meta.description;
 ---
 
 <!doctype html>
-<html lang={locale} id="html-root">
+<html lang={locale} id="html-root" class="hero-enter-on">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -87,13 +87,18 @@ const description = t.meta.description;
     </main>
 
     <script>
+      // Module-scoped so each re-run disconnects the prior observer.
+      let revealObserver: IntersectionObserver | null = null;
+      let blobObserver: IntersectionObserver | null = null;
+
       function setupReveal() {
-        const observer = new IntersectionObserver(
+        revealObserver?.disconnect();
+        revealObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
+                revealObserver?.unobserve(entry.target);
               }
             });
           },
@@ -101,12 +106,13 @@ const description = t.meta.description;
         );
         document
           .querySelectorAll(".reveal:not(.is-visible)")
-          .forEach((el) => observer.observe(el));
+          .forEach((el) => revealObserver!.observe(el));
       }
 
-      // Pause blob drift while its section is off-screen.
+      // Pause blob drift and the hero scroll cue while their section is off-screen.
       function setupBlobs() {
-        const io = new IntersectionObserver(
+        blobObserver?.disconnect();
+        blobObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
               entry.target.classList.toggle("section-offscreen", !entry.isIntersecting);
@@ -115,7 +121,7 @@ const description = t.meta.description;
           { rootMargin: "150px" },
         );
         document.querySelectorAll("section").forEach((s) => {
-          if (s.querySelector(".blob, .blob-delay")) io.observe(s);
+          if (s.querySelector(".blob, .blob-delay, .bounce-y")) blobObserver!.observe(s);
         });
       }
 
@@ -123,6 +129,12 @@ const description = t.meta.description;
       document.addEventListener("astro:page-load", () => {
         setupReveal();
         setupBlobs();
+      });
+
+      // Strip the first-load flag from the incoming page so the hero entrance
+      // doesn't replay over the view-transition crossfade.
+      document.addEventListener("astro:before-swap", (event) => {
+        (event as any).newDocument?.documentElement.classList.remove("hero-enter-on");
       });
 
       // On navigation, reveal everything at once so the view transition is the only animation.

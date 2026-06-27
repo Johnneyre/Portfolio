@@ -15,7 +15,8 @@
 
   --color-text-primary: oklch(95% 0.005 155);
   --color-text-secondary: oklch(88% 0 0);
-  --color-text-muted: oklch(52% 0.01 155);
+  /* Lightened for AA on the dark surface; .light keeps its own value below. */
+  --color-text-muted: oklch(58% 0.01 155);
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
@@ -34,11 +35,18 @@
   --color-surface-950: oklch(99% 0.002 155);
   --color-surface-900: oklch(96% 0.005 155);
   --color-surface-800: oklch(92% 0.006 155);
-  --color-surface-700: oklch(86% 0.008 155);
+  /* Darkened so footer / mobile-menu dividers stay perceptible on the light page. */
+  --color-surface-700: oklch(80% 0.01 155);
   --color-header-buttons: oklch(0.99 0 0);
   --color-text-primary: oklch(12% 0.01 155);
   --color-text-secondary: oklch(32% 0.01 155);
   --color-text-muted: oklch(52% 0.01 155);
+
+  /* Darkened for WCAG AA on the light bg; chroma capped to the hue-155 sRGB
+     ceiling. Tuned for contrast, not a lightness ramp (gradient handled separately). */
+  --color-brand-500: oklch(52% 0.125 155);
+  --color-brand-400: oklch(51% 0.125 155);
+  --color-brand-300: oklch(50% 0.12 155);
 }
 
 /* ─── Base ──────────────────────────────────────────────────── */
@@ -63,30 +71,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Reading Progress Bar (scroll-driven CSS) ──────────────── */
-#scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  background: linear-gradient(90deg, var(--color-brand-500), var(--color-brand-300));
-  transform-origin: left;
-  transform: scaleX(0);
-  z-index: 9999;
+/* ─── Keyboard focus ────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
 }
-/* Gate activation: without scroll-timeline support the 0s-duration shorthand +
-   fill-mode:both would paint a permanently full bar. */
-@supports (animation-timeline: scroll()) {
-  #scroll-progress {
-    animation: progress-grow linear both;
-    animation-timeline: scroll(root block);
-  }
+
+/* Inset: the lang dropdown clips overflow and would crop the ring. */
+.lang-option:focus-visible {
+  outline-offset: -2px;
 }
-@keyframes progress-grow {
-  to {
-    transform: scaleX(1);
-  }
+
+/* Surface the sr-only checkbox's focus on the visible hamburger label. */
+header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 /* ─── Performance helpers ───────────────────────────────────── */
@@ -172,6 +172,12 @@ body {
   background-clip: text;
 }
 
+/* The darkened light-mode tokens sit too close to read as a gradient, so paint a
+   dedicated spread. background-image (not the shorthand) preserves background-clip: text. */
+.light .gradient-text {
+  background-image: linear-gradient(135deg, oklch(44% 0.105 155), oklch(53% 0.125 155));
+}
+
 /* ─── Typography Scale ──────────────────────────────────────── */
 .text-hero {
   font-size: clamp(2.25rem, 6vw, 4.25rem);
@@ -199,8 +205,11 @@ body {
 
 .light .card {
   background: #ffffff;
-  border-color: oklch(88% 0.01 155);
-  box-shadow: 0 1px 6px oklch(0% 0 0 / 0.06);
+  border-color: oklch(82% 0.012 155);
+  /* Shadow carries the tile boundary; a true 3:1 border would read heavy. */
+  box-shadow:
+    0 1px 2px oklch(0% 0 0 / 0.08),
+    0 8px 20px -8px oklch(0% 0 0 / 0.14);
 }
 
 .card:hover {
@@ -244,6 +253,11 @@ body {
   justify-content: center;
   width: 1rem;
   height: 1rem;
+}
+
+/* Firm up the chip outline so the pill reads on the white card. */
+.light .tag-chip {
+  border-color: oklch(68% 0.13 155 / 0.55);
 }
 
 /* ─── Timeline ──────────────────────────────────────────────── */
@@ -320,12 +334,10 @@ body {
   background: oklch(9% 0.01 155 / 0.88);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-bottom-color: var(--color-surface-800);
 }
 
 .light .header-glass.is-scrolled {
   background: oklch(98% 0.004 155 / 0.92);
-  border-bottom-color: oklch(86% 0.01 155);
 }
 
 /* ─── Lang switcher + theme toggle equal width ───────────────── */
@@ -341,10 +353,21 @@ body {
   height: 2.25rem;
 }
 
+/* ─── Header controls: light mode visibility ─────────────────── */
+/* Darken the amber sun + control borders to clear 3:1 on the white buttons. */
+.light #icon-sun {
+  fill: oklch(62% 0.17 70);
+  stroke: oklch(54% 0.16 60);
+}
+
+.light #theme-toggle {
+  border-color: oklch(66% 0.012 155);
+}
+
 /* ─── Lang switcher light mode ───────────────────────────────── */
 .light .lang-switcher-btn,
 .light #lang-toggle-btn {
-  border-color: oklch(80% 0.012 155);
+  border-color: oklch(66% 0.012 155);
   background: var(--color-header-buttons);
   color: oklch(25% 0.01 155);
 }
@@ -482,8 +505,10 @@ body {
 
 .light .skill-icon-card {
   background: #ffffff;
-  border-color: oklch(88% 0.01 155);
-  box-shadow: 0 1px 4px oklch(0% 0 0 / 0.06);
+  border-color: oklch(82% 0.012 155);
+  box-shadow:
+    0 1px 2px oklch(0% 0 0 / 0.07),
+    0 4px 12px -6px oklch(0% 0 0 / 0.1);
 }
 
 .skill-icon-card:hover {
@@ -555,6 +580,11 @@ a.proj-cover {
 a.proj-cover:focus-visible {
   outline: 2px solid oklch(65% 0.16 var(--accent-h) / 0.85);
   outline-offset: -3px;
+}
+
+/* The light cover is pale, so the dark-tuned ring above drops below 3:1. */
+.light a.proj-cover:focus-visible {
+  outline-color: oklch(45% 0.16 var(--accent-h));
 }
 
 /* Framed screenshot rising from the bottom of the backdrop. */
@@ -741,9 +771,5 @@ a.proj-cover:focus-visible {
   .theme-transitioning,
   .theme-transitioning * {
     transition: none !important;
-  }
-
-  #scroll-progress {
-    display: none !important;
   }
 }

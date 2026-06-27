@@ -68,22 +68,13 @@ const t = useTranslations(locale);
     class="flex flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50 opacity-0 invisible -translate-y-2 transition-all duration-300 ease-in-out peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0"
     style="border-color: var(--color-surface-700); background: var(--color-surface-900, var(--color-bg));"
   >
-    <a
-      href={`#${sectionId(locale, "experience")}`}
-      class="nav-link link-hover font-medium py-1"
-    >
+    <a href={`#${sectionId(locale, "experience")}`} class="nav-link link-hover font-medium py-1">
       {t.nav.experience}
     </a>
-    <a
-      href={`#${sectionId(locale, "projects")}`}
-      class="nav-link link-hover font-medium py-1"
-    >
+    <a href={`#${sectionId(locale, "projects")}`} class="nav-link link-hover font-medium py-1">
       {t.nav.projects}
     </a>
-    <a
-      href={`#${sectionId(locale, "skills")}`}
-      class="nav-link link-hover font-medium py-1"
-    >
+    <a href={`#${sectionId(locale, "skills")}`} class="nav-link link-hover font-medium py-1">
       {t.nav.skills}
     </a>
   </div>

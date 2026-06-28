@@ -19,9 +19,6 @@ const PROJECT_IMAGES: Record<string, ImageMetadata> = {
   'image-optimize-webgpu': webgpuImg,
 };
 
-const linkBtnStyle =
-  'border-color: var(--color-brand-500); background: oklch(95% 0.09 155 / 0.08); color: var(--color-text-primary);';
-
 const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_labels] ?? id;
 ---
 
@@ -36,7 +33,7 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
 
     <div class="reveal mb-12">
       <p
-        class="text-sm font-semibold tracking-widest uppercase mb-3"
+        class="eyebrow text-sm font-semibold tracking-widest uppercase mb-3"
         style="color: var(--color-brand-400);"
       >
         {t.projects.label}
@@ -115,12 +112,17 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
               <h3 class="text-lg font-bold m-0" style="color: var(--color-text-primary);">
                 {tItem.title}
               </h3>
-              <p
-                class="text-sm leading-relaxed m-0 flex-1"
-                style="color: var(--color-text-secondary);"
-              >
-                {tItem.description}
-              </p>
+
+              <div class="flex flex-col gap-3 flex-1">
+                <p class="text-sm leading-relaxed m-0" style="color: var(--color-text-secondary);">
+                  {tItem.description}
+                </p>
+                <ul class="proj-highlights">
+                  {tItem.highlights.map((point) => (
+                    <li>{point}</li>
+                  ))}
+                </ul>
+              </div>
 
               <div class="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
@@ -145,11 +147,11 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${tItem.title} – ${t.projects.demo}`}
-                      class="social-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border"
-                      style={linkBtnStyle}
+                      class="social-btn social-btn--pill inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border"
                     >
                       <Icon name="globe" size={16} aria-hidden="true" />
                       <span>{t.projects.demo}</span>
+                      <Icon name="arrow-up-right" size={14} aria-hidden="true" class="ml-0.5 opacity-70" />
                     </a>
                   )}
                   {project.repoUrl && (
@@ -158,11 +160,11 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${tItem.title} – ${t.projects.code}`}
-                      class="social-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold border"
-                      style={linkBtnStyle}
+                      class="social-btn social-btn--pill inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border"
                     >
                       <Icon name="github" size={16} aria-hidden="true" />
                       <span>{t.projects.code}</span>
+                      <Icon name="arrow-up-right" size={14} aria-hidden="true" class="ml-0.5 opacity-70" />
                     </a>
                   )}
                 </div>

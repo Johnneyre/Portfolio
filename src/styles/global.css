@@ -20,7 +20,7 @@
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* Header height for calculations */
+  /* Fixed-header height; Hero offsets against it to fill the viewport below. */
   --header-height: 4.5rem;
 }
 
@@ -192,6 +192,22 @@ header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
   letter-spacing: -0.02em;
 }
 
+/* Section eyebrow with a leading rule (── LABEL); the rule inherits the label color. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.eyebrow::before {
+  content: "";
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
 /* ─── Card ──────────────────────────────────────────────────── */
 .card {
   background: var(--color-surface-900);
@@ -263,10 +279,10 @@ header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
 /* ─── Timeline ──────────────────────────────────────────────── */
 .timeline-dot {
   position: absolute;
-  left: -2rem; /* offsets pl-8 so dot center (0.6875rem) aligns with the line */
+  left: -2.5rem; /* offsets pl-8 so dot center (0.6875rem) aligns with the line */
   top: 0.2rem;
-  width: 1.375rem;
-  height: 1.375rem;
+  width: 2.375rem;
+  height: 2.375rem;
   border-radius: 9999px;
   background: var(--color-brand-500);
   box-shadow: 0 0 12px oklch(58% 0.18 155 / 0.45);
@@ -393,11 +409,26 @@ header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
   color: oklch(15% 0.02 155);
 }
 
-/* ─── Social button fill animation (left→right) ─────────────── */
+/* ─── Outline action buttons (Hero socials + project links) ──── */
+/* Tinted fill + green outline; a brand sweep wipes left→right on hover (::before).
+   Outline lightness is tuned per theme to clear 3:1 against its surface. */
 .social-btn {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  border-radius: 0.75rem;
+  background: oklch(95% 0.09 155 / 0.08);
+  color: var(--color-text-primary);
+  border-color: oklch(48% 0.09 155);
+}
+
+.light .social-btn {
+  border-color: oklch(26% 0.07 155);
+}
+
+/* Project link buttons use a full pill; Hero socials keep the softer radius. */
+.social-btn--pill {
+  border-radius: 9999px;
 }
 
 .social-btn::before {
@@ -544,6 +575,35 @@ i.devicon-angular-plain.colored {
   overflow: hidden;
 }
 
+/* Scannable highlight list: short intro paragraph + brand-dot bullets. */
+.proj-highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.proj-highlights li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.proj-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 9999px;
+  background: var(--color-brand-400);
+}
+
 /* Hover lift inherits from .card; the border/glow picks up the project accent. */
 .proj-card:hover {
   border-color: oklch(62% 0.15 var(--accent-h) / 0.6);
@@ -589,7 +649,7 @@ a.proj-cover:focus-visible {
 
 /* Framed screenshot rising from the bottom of the backdrop. */
 .proj-cover--shot {
-  padding: 7% 8% 0;
+  padding: 3% 4% 0;
 }
 
 .proj-shot {

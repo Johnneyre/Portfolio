@@ -79,20 +79,39 @@ export const en: Translations = {
   project_items: {
     'image-optimize-webgpu': {
       title: 'WebGPU Image Optimizer',
-      description:
-        'Image compressor running 100% in the browser: adjusts brightness and contrast on the GPU with a WebGPU compute shader (WGSL) and re-encodes to WebP or JPEG inside a Web Worker. No servers, no uploads — full privacy and parallel GPU processing. Built with Angular 21 (standalone + signals) and deployed on Cloudflare.',
+      description: 'Image compressor that runs 100% in the browser — no servers, no uploads.',
+      highlights: [
+        'Brightness and contrast adjusted on the GPU with a WebGPU compute shader (WGSL).',
+        'Re-encodes to WebP or JPEG inside a Web Worker.',
+        'Full privacy and parallel GPU processing.',
+      ],
     },
     'insurance-system': {
       title: 'Insurance Management System',
-      description: 'Insurance management platform with a frontend refactored to Screaming Architecture for maximum scalability. Features environment-based dynamic routing (DEV/QA/UAT/PROD), UI-configurable maintenance windows with real-time WebSocket notifications, and a 40% reduction in initial load time through bundle analysis and asset optimization.',
+      description: 'Insurance management platform with a frontend refactored to Screaming Architecture.',
+      highlights: [
+        'Environment-based dynamic routing (DEV/QA/UAT/PROD).',
+        'UI-configurable maintenance windows with real-time WebSocket notifications.',
+        'Modular, reusable components built with Vue.js, TypeScript and Quasar.',
+        '40% reduction in initial load time.',
+      ],
     },
     minegos: {
       title: 'Minegos E-commerce',
-      description: 'E-commerce platform with a full admin panel and public storefront. Data model and CRUD operations built with Drizzle ORM, including a shopping cart, advanced search filters, and autonomous management of products, categories and Linktree-style link configuration.',
+      description: 'E-commerce platform with a full admin panel and public storefront.',
+      highlights: [
+        'Data model and CRUD operations built with Drizzle ORM.',
+        'Shopping cart and advanced search filters.',
+        'Autonomous management of products, categories and Linktree-style links.',
+      ],
     },
     'hours-control': {
       title: 'Hours Control',
-      description: 'Responsive web system for university employee hours tracking, built collaboratively. Automated repetitive tasks achieving a 30% increase in staff performance, and enabled real-time activity monitoring for management.',
+      description: 'Responsive web system for university employee hours tracking, built collaboratively.',
+      highlights: [
+        'Automated repetitive tasks, boosting staff performance by 30%.',
+        'Real-time activity monitoring for management.',
+      ],
     },
   },
   skill_categories: {

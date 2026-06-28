@@ -3,6 +3,7 @@ export type IconName =
   | 'github'
   | 'email'
   | 'arrow-down'
+  | 'arrow-up-right'
   | 'briefcase'
   | 'graduation'
   | 'calendar'

@@ -63,6 +63,7 @@ export interface Translations {
     [key: string]: {
       title: string;
       description: string;
+      highlights: string[];
     };
   };
   skill_categories: {

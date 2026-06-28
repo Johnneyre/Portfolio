@@ -79,20 +79,39 @@ export const es: Translations = {
   project_items: {
     'image-optimize-webgpu': {
       title: 'WebGPU Image Optimizer',
-      description:
-        'Compresor de imágenes que corre 100% en el navegador: ajusta brillo y contraste en la GPU con un compute shader WebGPU (WGSL) y re-codifica a WebP o JPEG dentro de un Web Worker. Sin servidores ni subidas — privacidad total y procesamiento paralelo en GPU. Construido con Angular 21 (standalone + signals) y desplegado en Cloudflare.',
+      description: 'Compresor de imágenes que corre 100% en el navegador, sin servidores ni subidas.',
+      highlights: [
+        'Ajuste de brillo y contraste en la GPU con un compute shader WebGPU (WGSL).',
+        'Re-codificación a WebP o JPEG dentro de un Web Worker.',
+        'Privacidad total y procesamiento paralelo en GPU.',
+      ],
     },
     'insurance-system': {
       title: 'Sistema de Gestión de Seguros',
-      description: 'Plataforma de gestión de seguros con frontend refactorizado hacia Screaming Architecture para máxima escalabilidad. Incluye enrutamiento dinámico por entorno (DEV/QA/UAT/PROD), ventanas de mantenimiento configurables vía UI con notificaciones en tiempo real por WebSockets, y optimización de carga inicial reducida en un 40%.',
+      description: 'Plataforma de gestión de seguros con frontend refactorizado hacia Screaming Architecture.',
+      highlights: [
+        'Enrutamiento dinámico por entorno (DEV/QA/UAT/PROD).',
+        'Ventanas de mantenimiento configurables vía UI con notificaciones en tiempo real por WebSockets.',
+        'Componentes modulares y reutilizables con Vue.js, TypeScript y Quasar.',
+        'Carga inicial reducida en un 40%.',
+      ],
     },
     minegos: {
       title: 'E-commerce Minegos',
-      description: 'Plataforma de comercio electrónico con panel administrativo integral y storefront público. Modelo de datos y operaciones CRUD implementados con Drizzle ORM, carrito de compras, filtros de búsqueda avanzados, y gestión autónoma de productos, categorías y configuración de enlaces estilo Linktree.',
+      description: 'Plataforma de comercio electrónico con panel administrativo integral y storefront público.',
+      highlights: [
+        'Modelo de datos y operaciones CRUD con Drizzle ORM.',
+        'Carrito de compras y filtros de búsqueda avanzados.',
+        'Gestión autónoma de productos, categorías y enlaces estilo Linktree.',
+      ],
     },
     'hours-control': {
       title: 'Control de Horas',
-      description: 'Sistema web responsive para el control de horas de empleados universitarios, desarrollado de forma colaborativa. Automatizó tareas repetitivas logrando un incremento del 30% en el desempeño del personal, y habilitó la supervisión de actividades en tiempo real por parte de la gerencia.',
+      description: 'Sistema web responsive para el control de horas de empleados universitarios, desarrollado en equipo.',
+      highlights: [
+        'Automatización de tareas repetitivas con un incremento del 30% en el desempeño del personal.',
+        'Supervisión de actividades en tiempo real para la gerencia.',
+      ],
     },
   },
   skill_categories: {

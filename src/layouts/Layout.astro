@@ -5,6 +5,7 @@ import SEO from "../components/SEO.astro";
 import type { SupportedLocale } from "../i18n/utils";
 import { useTranslations } from "../i18n/utils";
 import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
 
 interface Props {
   locale?: SupportedLocale;
@@ -32,12 +33,8 @@ const description = t.meta.description;
     <!-- View transitions: switch locales without a full page reload -->
     <ClientRouter />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Self-hosted Sora (variable): preload + @font-face injected by Astro. -->
+    <Font cssVariable="--font-sora" preload />
 
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />

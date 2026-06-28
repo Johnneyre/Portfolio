@@ -1,5 +1,4 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
@@ -14,6 +13,24 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
+  fonts: [
+    {
+      name: 'Sora',
+      cssVariable: '--font-sora',
+      provider: fontProviders.local(),
+      options: {
+        variants: [
+          {
+            weight: '100 800',
+            style: 'normal',
+            src: ['./src/assets/fonts/Sora-VariableFont_wght.woff2'],
+          },
+        ],
+      },
+      fallbacks: ['system-ui', 'sans-serif'],
+    },
+  ],
 
   integrations: [
     sitemap({

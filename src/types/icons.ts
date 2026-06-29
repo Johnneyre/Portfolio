@@ -7,7 +7,6 @@ export type IconName =
   | 'briefcase'
   | 'graduation'
   | 'calendar'
-  | 'pinia'
   | 'menu'
   | 'globe'
   | 'chevron-down'

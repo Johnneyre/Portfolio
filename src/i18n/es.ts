@@ -126,8 +126,6 @@ export const es: Translations = {
     webgpu: 'WebGPU',
     vuejs: 'Vue.js',
     svelte: 'Svelte',
-    html5: 'HTML5',
-    css3: 'CSS3',
     tailwindcss: 'TailwindCSS',
     quasar: 'Quasar',
     sass: 'Sass',

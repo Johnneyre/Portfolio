@@ -42,10 +42,10 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
     liveUrl: 'https://webgpu-image-optimizer.com/',
     repoUrl: 'https://github.com/Johnneyre/image-optimizer-web-gpu',
     tags: [
-      { id: 'angular', devicon: 'devicon-angular-plain colored' },
-      { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
-      { id: 'webgpu', devicon: '' },
-      { id: 'tailwindcss', devicon: 'devicon-tailwindcss-plain colored' },
+      { id: 'angular' },
+      { id: 'typescript' },
+      { id: 'webgpu' },
+      { id: 'tailwindcss' },
     ],
   },
   {
@@ -53,10 +53,10 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
     accent: 255,
     concept: 'shield',
     tags: [
-      { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
-      { id: 'pinia', devicon: 'devicon-pinia-plain colored' },
-      { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
-      { id: 'spring-boot', devicon: 'devicon-spring-plain colored' },
+      { id: 'vuejs' },
+      { id: 'pinia' },
+      { id: 'typescript' },
+      { id: 'spring-boot' },
     ],
   },
   {
@@ -64,9 +64,9 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
     accent: 300,
     concept: 'cart',
     tags: [
-      { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
-      { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
-      { id: 'tailwindcss', devicon: 'devicon-tailwindcss-plain colored' },
+      { id: 'vuejs' },
+      { id: 'typescript' },
+      { id: 'tailwindcss' },
     ],
   },
   {
@@ -74,9 +74,9 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
     accent: 70,
     concept: 'clock',
     tags: [
-      { id: 'javascript', devicon: 'devicon-javascript-plain colored' },
-      { id: 'html5', devicon: 'devicon-html5-plain colored' },
-      { id: 'css3', devicon: 'devicon-css3-plain colored' },
+      { id: 'svelte' },
+      { id: 'tailwindcss' },
+      { id: 'supabase' },
     ],
   },
 ] as const;
@@ -85,31 +85,31 @@ export const SKILL_CATEGORIES: readonly SkillCategory[] = [
   {
     id: 'languages-frameworks',
     skills: [
-      { id: 'angular', devicon: 'devicon-angular-plain colored' },
-      { id: 'vuejs', devicon: 'devicon-vuejs-plain colored' },
-      { id: 'astro', devicon: 'devicon-astro-plain colored' },
-      { id: 'svelte', devicon: 'devicon-svelte-plain colored' },
-      { id: 'typescript', devicon: 'devicon-typescript-plain colored' },
-      { id: 'javascript', devicon: 'devicon-javascript-plain colored' },
+      { id: 'angular' },
+      { id: 'vuejs' },
+      { id: 'astro' },
+      { id: 'svelte' },
+      { id: 'typescript' },
+      { id: 'javascript' },
     ],
   },
   {
     id: 'styles-ui',
     skills: [
-      { id: 'tailwindcss', devicon: 'devicon-tailwindcss-plain colored' },
-      { id: 'quasar', devicon: 'devicon-quasar-plain colored' },
-      { id: 'sass', devicon: 'devicon-sass-plain colored' },
-      { id: 'figma', devicon: 'devicon-figma-plain colored' },
+      { id: 'tailwindcss' },
+      { id: 'quasar' },
+      { id: 'sass' },
+      { id: 'figma' },
     ],
   },
   {
     id: 'tools-methods',
     skills: [
-      { id: 'git', devicon: 'devicon-git-plain colored' },
-      { id: 'github', devicon: 'devicon-github-plain' },
-      { id: 'azure-devops', devicon: 'devicon-azuredevops-plain colored' },
-      { id: 'supabase', devicon: 'devicon-supabase-plain colored' },
-      { id: 'pinia', devicon: 'devicon-pinia-plain colored' },
+      { id: 'git' },
+      { id: 'github' },
+      { id: 'azure-devops' },
+      { id: 'supabase' },
+      { id: 'pinia' },
     ],
   },
 ] as const;

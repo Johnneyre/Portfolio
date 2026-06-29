@@ -261,14 +261,9 @@ header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
   line-height: 1;
 }
 
-.tag-chip i {
-  font-size: 1rem;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
+.tag-chip svg {
+  display: block;
+  flex-shrink: 0;
 }
 
 /* Firm up the chip outline so the pill reads on the white card. */
@@ -548,13 +543,10 @@ header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
   box-shadow: 0 6px 20px oklch(58% 0.18 155 / 0.15);
 }
 
-.skill-icon-card i {
-  font-size: 2rem;
-  display: block;
-}
-
+/* Brand logos are full-color SVGs; monochrome ones (astro, github) use currentColor. */
 .skill-icon-card svg {
   display: block;
+  color: var(--color-text-primary);
 }
 
 .skill-icon-card span {
@@ -563,11 +555,6 @@ header:has(#mobile-menu-toggle:focus-visible) label[for="mobile-menu-toggle"] {
   text-align: center;
   color: var(--color-text-secondary);
   line-height: 1.2;
-}
-
-/* Devicon ships the modern Angular glyph as white (.colored = #fff); tint it the Angular brand red. */
-i.devicon-angular-plain.colored {
-  color: #dd0031;
 }
 
 /* ─── Projects grid ─────────────────────────────────────────── */
@@ -744,9 +731,8 @@ a.proj-cover:focus-visible {
   margin-top: 0.1rem;
 }
 
-.proj-gen__logos i {
-  font-size: 1.7rem;
-  line-height: 1;
+.proj-gen__logos svg {
+  display: block;
 }
 
 /* Hover zoom: the framed shot or concept panel scales as a single unit, so frame and image move together. */

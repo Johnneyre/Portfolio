@@ -2,12 +2,10 @@ import type { IconName } from './icons';
 
 export interface TechTag {
   readonly id: string;
-  readonly devicon: string; // devicon class name e.g. "devicon-vuejs-plain"
 }
 
 export interface SkillItem {
   readonly id: string;
-  readonly devicon: string;
 }
 
 export interface SkillCategory {

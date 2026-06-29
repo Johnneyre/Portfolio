@@ -1,0 +1,58 @@
+---
+import Icon from './Icon.astro';
+import Angular from '../assets/logos/angular.svg';
+import Vue from '../assets/logos/vue.svg';
+import AstroLogo from '../assets/logos/astro.svg';
+import Svelte from '../assets/logos/svelte.svg';
+import TypeScript from '../assets/logos/typescript.svg';
+import JavaScript from '../assets/logos/javascript.svg';
+import Tailwind from '../assets/logos/tailwindcss.svg';
+import Quasar from '../assets/logos/quasar.svg';
+import Sass from '../assets/logos/sass.svg';
+import Figma from '../assets/logos/figma.svg';
+import Git from '../assets/logos/git.svg';
+import GitHub from '../assets/logos/github.svg';
+import AzureDevops from '../assets/logos/azuredevops.svg';
+import Supabase from '../assets/logos/supabase.svg';
+import Spring from '../assets/logos/spring.svg';
+import Pinia from '../assets/logos/pinia.svg';
+
+interface Props {
+  /** Matches the skill/tag id in data/portfolio.ts */
+  id: string;
+  size?: number;
+  class?: string;
+}
+
+const { id, size = 32, class: className = '' } = Astro.props;
+
+// Self-hosted brand logos (svgl + devicon). webgpu is the only custom one (Icon.astro).
+const LOGOS: Record<string, any> = {
+  angular: Angular,
+  vuejs: Vue,
+  astro: AstroLogo,
+  svelte: Svelte,
+  typescript: TypeScript,
+  javascript: JavaScript,
+  tailwindcss: Tailwind,
+  quasar: Quasar,
+  sass: Sass,
+  figma: Figma,
+  git: Git,
+  github: GitHub,
+  'azure-devops': AzureDevops,
+  supabase: Supabase,
+  'spring-boot': Spring,
+  pinia: Pinia,
+};
+
+const Logo = LOGOS[id];
+---
+
+{
+  id === 'webgpu' ? (
+    <Icon name="webgpu" size={size} class={className} />
+  ) : Logo ? (
+    <Logo width={size} height={size} class={className} role="img" aria-hidden="true" />
+  ) : null
+}

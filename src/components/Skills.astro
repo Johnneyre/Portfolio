@@ -3,7 +3,7 @@ import { SKILL_CATEGORIES } from '../data/portfolio';
 import { useTranslations, sectionId } from '../i18n/utils';
 import type { SupportedLocale } from '../i18n/utils';
 import DecorativeBlobs from './DecorativeBlobs.astro';
-import Icon from './Icon.astro';
+import TechLogo from './TechLogo.astro';
 
 interface Props {
   locale: SupportedLocale;
@@ -48,11 +48,7 @@ const t = useTranslations(locale);
                     class={`reveal reveal-delay-${Math.min(sIdx + 1, 5)} skill-icon-card`}
                     title={skillLabel}
                   >
-                    {skill.id === 'pinia' ? (
-                      <Icon name="pinia" size={32} />
-                    ) : (
-                      <i class={skill.devicon} aria-hidden="true"></i>
-                    )}
+                    <TechLogo id={skill.id} size={32} />
                     <span>{skillLabel}</span>
                   </div>
                 );

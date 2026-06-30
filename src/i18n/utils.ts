@@ -15,8 +15,6 @@ export function getLocalePath(locale: SupportedLocale, path = ''): string {
   return `/en/${path}`;
 }
 
-export const SUPPORTED_LOCALES: readonly SupportedLocale[] = ['es', 'en'] as const;
-
 export type SectionKey = 'home' | 'experience' | 'projects' | 'skills';
 
 // Section anchor slugs, localized per language (e.g. "#inicio" vs "#start").

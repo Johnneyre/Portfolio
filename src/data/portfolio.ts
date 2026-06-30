@@ -3,16 +3,9 @@ import type {
   ProjectItem,
   SkillCategory,
   SocialLink,
-  NavLink,
 } from '../types/data';
 
 // Structural data only - all translatable text lives in i18n/*.ts
-
-export const NAV_LINKS: readonly NavLink[] = [
-  { id: 'experience', href: '#experience' },
-  { id: 'projects', href: '#projects' },
-  { id: 'skills', href: '#skills' },
-] as const;
 
 export const SOCIAL_LINKS: readonly SocialLink[] = [
   { id: 'email', href: 'mailto:johnneyrez@gmail.com', icon: 'email' },

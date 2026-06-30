@@ -14,7 +14,7 @@ const t = useTranslations(locale);
 ---
 
 <header class="header-glass sticky top-0 z-50">
-  <nav class="container-max flex items-center justify-between py-4 px-5">
+  <nav class="container-max flex items-center justify-between py-4 px-5" aria-label={t.nav.primary}>
     <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text"> JZ </a>
 
     <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
@@ -54,7 +54,6 @@ const t = useTranslations(locale);
       <label
         class="md:hidden cursor-pointer"
         for="mobile-menu-toggle"
-        aria-label="Menú"
         style="color: var(--color-text-secondary);"
       >
         <Icon name="menu" size={22} />
@@ -62,7 +61,7 @@ const t = useTranslations(locale);
     </div>
   </nav>
 
-  <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" />
+  <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" aria-label={t.nav.menu} />
   <div
     id="mobile-menu"
     class="flex flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50 opacity-0 invisible -translate-y-2 transition-all duration-300 ease-in-out peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0"

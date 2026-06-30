@@ -11,28 +11,22 @@ export interface Translations {
     experience: string;
     projects: string;
     skills: string;
-    home: string;
+    menu: string;
+    primary: string;
+    footer: string;
   };
   social: {
     email: string;
-    linkedin: string;
-    github: string;
   };
   hero: {
     greeting: string;
     role: string;
     bio: string;
-    cta_projects: string;
-    cta_contact: string;
-    available: string;
-    download_cv: string;
     scroll_label: string;
   };
   experience: {
     label: string;
     title: string;
-    education_label: string;
-    current: string;
   };
   projects: {
     label: string;
@@ -41,7 +35,6 @@ export interface Translations {
     code: string;
   };
   skills: {
-    label: string;
     title: string;
     subtitle: string;
   };

@@ -19,11 +19,6 @@ export interface SocialLink {
   readonly icon: 'email' | 'linkedin' | 'github';
 }
 
-export interface NavLink {
-  readonly id: string;
-  readonly href: string;
-}
-
 export interface TimelineItem {
   readonly id: string;
   readonly type: 'work' | 'education';

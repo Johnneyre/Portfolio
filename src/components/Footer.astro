@@ -15,7 +15,7 @@ const t = useTranslations(locale);
   style="border-color: var(--color-surface-700); background: var(--color-surface-950);"
 >
   <div class="container-max flex flex-col sm:flex-row items-center justify-between gap-4 py-7 px-5">
-    <nav>
+    <nav aria-label={t.nav.footer}>
       <ul class="flex items-center gap-6 list-none m-0 p-0">
         <li>
           <a href={`#${sectionId(locale, "home")}`} class="link-hover text-sm font-medium">

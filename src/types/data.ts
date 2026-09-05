@@ -33,7 +33,7 @@ export interface ProjectItem {
   readonly liveUrl?: string;
   /** Optional source code URL. When present, a "code" button is rendered. */
   readonly repoUrl?: string;
-  /** Accent hue (OKLCh degrees) used to tint the project's cover backdrop. */
+  /** Accent hue (OKLCh degrees) that tints the generated cover of a project without a screenshot. */
   readonly accent?: number;
   /** Concept icon for the generated cover when there is no screenshot. */
   readonly concept?: IconName;

@@ -8,35 +8,34 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+
+const links = [
+  { key: "home", label: t.footer.links.home },
+  { key: "experience", label: t.footer.links.experience },
+  { key: "projects", label: t.footer.links.projects },
+] as const;
+
+const year = new Date().getFullYear();
 ---
 
-<footer
-  class="border-t"
-  style="border-color: var(--color-surface-700); background: var(--color-surface-950);"
->
-  <div class="container-max flex flex-col sm:flex-row items-center justify-between gap-4 py-7 px-5">
+<footer class="site-foot">
+  <div class="wrap">
     <nav aria-label={t.nav.footer}>
-      <ul class="flex items-center gap-6 list-none m-0 p-0">
-        <li>
-          <a href={`#${sectionId(locale, "home")}`} class="link-hover text-sm font-medium">
-            {t.footer.links.home}
-          </a>
-        </li>
-        <li>
-          <a href={`#${sectionId(locale, "experience")}`} class="link-hover text-sm font-medium">
-            {t.footer.links.experience}
-          </a>
-        </li>
-        <li>
-          <a href={`#${sectionId(locale, "projects")}`} class="link-hover text-sm font-medium">
-            {t.footer.links.projects}
-          </a>
-        </li>
+      <ul class="foot-links">
+        {
+          links.map((link) => (
+            <li>
+              <a href={`#${sectionId(locale, link.key)}`} class="link-hover">
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
 
-    <p class="text-sm m-0" style="color: var(--color-text-muted);">
-      &copy; <span id="footer-year"></span> Johnneyre Zambrano
+    <p class="copy">
+      &copy; <span id="footer-year">{year}</span> {t.owner.name}
     </p>
   </div>
 </footer>

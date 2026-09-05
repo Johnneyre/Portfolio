@@ -1,116 +1,48 @@
 ---
-import Icon from "./Icon.astro";
-// Client-side only – language is derived from the server-rendered <html lang>.
+import { getLocalePath } from "../i18n/utils";
+import type { SupportedLocale } from "../i18n/utils";
+
+interface Props {
+  locale: SupportedLocale;
+  label: string;
+}
+
+const { locale, label } = Astro.props;
+
+const options: readonly { code: SupportedLocale; name: string }[] = [
+  { code: "es", name: "Español" },
+  { code: "en", name: "English" },
+];
 ---
 
-<div class="relative" id="lang-switcher">
-  <button
-    id="lang-toggle-btn"
-    aria-label="Switch language"
-    class="lang-switcher-btn flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-colors duration-200"
-    style="border-color: var(--color-surface-700); background: var(--color-header-buttons); color: var(--color-text-primary);"
-  >
-    <Icon name="globe" size={14} />
-    <span id="lang-current-label" class="text-sm font-bold">ES</span>
-    <span id="lang-chevron" style="transition: transform 0.2s ease; display: inline-flex;">
-      <Icon name="chevron-down" size={12} />
-    </span>
-  </button>
-
-  <div
-    id="lang-dropdown"
-    class="lang-dropdown absolute right-0 mt-1.5 rounded-xl border shadow-xl overflow-hidden hidden"
-    style="
-      background: var(--color-surface-800);
-      border-color: var(--color-surface-700);
-      min-width: 90px;
-      z-index: 100;
-    "
-  >
-    <a
-      class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
-      data-lang="es"
-      href="/"
-      style="color: var(--color-text-primary); text-decoration: none;"
-    >
-      <span>ES</span>
-      <span id="dot-es" class="w-1.5 h-1.5 rounded-full" style="background: var(--color-brand-400);"></span>
-    </a>
-    <a
-      class="lang-option w-full flex items-center justify-between px-3 py-2.5 text-sm font-bold transition-colors"
-      data-lang="en"
-      href="/en/"
-      style="color: var(--color-text-primary); text-decoration: none;"
-    >
-      <span>EN</span>
-      <span id="dot-en" class="w-1.5 h-1.5 rounded-full hidden" style="background: var(--color-brand-400);"
-      ></span>
-    </a>
-  </div>
+<div class="lang" role="group" aria-label={label}>
+  {
+    options.map((lang, idx) => (
+      <>
+        {idx > 0 && <span aria-hidden="true">/</span>}
+        <a
+          href={getLocalePath(lang.code)}
+          data-lang={lang.code}
+          hreflang={lang.code}
+          lang={lang.code}
+          aria-label={lang.name}
+          aria-current={lang.code === locale ? "page" : undefined}
+          data-astro-prefetch
+        >
+          {lang.code.toUpperCase()}
+        </a>
+      </>
+    ))
+  }
 </div>
 
 <script>
-  function initLangSwitcher(): void {
-    const btn = document.getElementById("lang-toggle-btn");
-    const dropdown = document.getElementById("lang-dropdown");
-    const chevron = document.getElementById("lang-chevron");
-    const label = document.getElementById("lang-current-label");
-    const dotEs = document.getElementById("dot-es");
-    const dotEn = document.getElementById("dot-en");
-    if (!btn || !dropdown || !chevron || !label || !dotEs || !dotEn) return;
-
-    const setOpen = (open: boolean): void => {
-      dropdown.classList.toggle("hidden", !open);
-      chevron.style.transform = open ? "rotate(180deg)" : "rotate(0deg)";
-    };
-    const isOpen = (): boolean => !dropdown.classList.contains("hidden");
-
-    const current = document.documentElement.lang === "en" ? "en" : "es";
-    label.textContent = current.toUpperCase();
-    dotEs.classList.toggle("hidden", current !== "es");
-    dotEn.classList.toggle("hidden", current !== "en");
-
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setOpen(!isOpen());
-    });
-
-    dropdown.querySelectorAll<HTMLAnchorElement>(".lang-option").forEach((opt) => {
-      opt.addEventListener("click", (e) => {
-        const lang = opt.dataset.lang!;
-        localStorage.setItem("lang", lang);
-        if (lang === current) {
-          // Already on this language: don't navigate, just close.
-          e.preventDefault();
-          setOpen(false);
-        }
+  // LangHint checks this key before showing itself.
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLAnchorElement>(".lang a[data-lang]").forEach((link) => {
+      link.addEventListener("click", () => {
+        localStorage.setItem("lang", link.dataset.lang!);
       });
     });
-  }
-
-  // Reflect the active language before the transition paints.
-  function syncLangVisual(): void {
-    const label = document.getElementById("lang-current-label");
-    const dotEs = document.getElementById("dot-es");
-    const dotEn = document.getElementById("dot-en");
-    if (!label || !dotEs || !dotEn) return;
-    const current = document.documentElement.lang === "en" ? "en" : "es";
-    label.textContent = current.toUpperCase();
-    dotEs.classList.toggle("hidden", current !== "es");
-    dotEn.classList.toggle("hidden", current !== "en");
-  }
-
-  // Re-bind element listeners on first load and after every navigation.
-  document.addEventListener("astro:page-load", initLangSwitcher);
-  document.addEventListener("astro:after-swap", syncLangVisual);
-
-  // Close the dropdown on outside click (bound once; document persists).
-  document.addEventListener("click", (e) => {
-    const sw = document.getElementById("lang-switcher");
-    if (sw && !sw.contains(e.target as Node)) {
-      document.getElementById("lang-dropdown")?.classList.add("hidden");
-      const chev = document.getElementById("lang-chevron");
-      if (chev) chev.style.transform = "rotate(0deg)";
-    }
   });
 </script>

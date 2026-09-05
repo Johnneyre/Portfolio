@@ -7,19 +7,21 @@ interface Props {
   icon: IconName;
   label: string;
   title: string;
+  newTabLabel: string;
 }
 
-const { href, icon, label, title } = Astro.props;
+const { href, icon, label, title, newTabLabel } = Astro.props;
 ---
 
 <a
   href={href}
   target="_blank"
-  rel="noopener noreferrer"
-  aria-label={`${title} – ${label}`}
+  rel="noopener"
   class="social-btn social-btn--pill inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border"
 >
-  <Icon name={icon} size={16} aria-hidden="true" />
+  <Icon name={icon} size={16} />
+  <span class="sr-only">{title} – </span>
   <span>{label}</span>
-  <Icon name="arrow-up-right" size={14} aria-hidden="true" class="ml-0.5 opacity-70" />
+  <Icon name="arrow-up-right" size={14} class="ml-0.5 opacity-70" />
+  <span class="sr-only">{newTabLabel}</span>
 </a>

@@ -1,0 +1,27 @@
+---
+// One <symbol> per logo, referenced with <use> from TechLogo.
+const files = import.meta.glob("../assets/logos/*.svg", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
+
+const symbols = Object.entries(files).map(([path, raw]) => {
+  const name = path.split("/").pop()!.replace(/\.svg$/, "");
+  const open = raw.match(/<svg\b[^>]*>/)?.[0] ?? "";
+  const viewBox = open.match(/viewBox="([^"]+)"/)?.[1] ?? "0 0 24 24";
+  const fill = open.match(/\sfill="([^"]+)"/)?.[1];
+  const inner = raw.replace(/^[\s\S]*?<svg\b[^>]*>/, "").replace(/<\/svg>\s*$/, "");
+  return { name, viewBox, fill, inner };
+});
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" class="logo-sprite" aria-hidden="true" focusable="false">
+  {
+    symbols.map((s) => (
+      <symbol id={`logo-${s.name}`} viewBox={s.viewBox} fill={s.fill}>
+        <Fragment set:html={s.inner} />
+      </symbol>
+    ))
+  }
+</svg>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  number: string;
+  title: string;
+  headingId: string;
+  label?: string;
+  lead?: string;
+}
+
+const { number, title, headingId, label, lead } = Astro.props;
+---
+
+<header class="sec-head grid-12 reveal">
+  <span class="sec-num" aria-hidden="true">{number}</span>
+  <h2 class="sec-title" id={headingId}>{title}</h2>
+  {label && <p class="sec-label label">{label}</p>}
+  {lead && <p class="sec-lead">{lead}</p>}
+</header>

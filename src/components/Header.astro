@@ -11,76 +11,50 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = useTranslations(locale);
+
+const links = [
+  { key: "experience", label: t.nav.experience },
+  { key: "projects", label: t.nav.projects },
+  { key: "skills", label: t.nav.skills },
+] as const;
+
+const initials = t.owner.name
+  .split(" ")
+  .map((word) => word[0])
+  .join("");
 ---
 
-<header class="header-glass sticky top-0 z-50">
-  <nav class="container-max flex items-center justify-between py-4 px-5" aria-label={t.nav.primary}>
-    <a href={getLocalePath(locale)} class="font-extrabold text-xl tracking-tight gradient-text"> JZ </a>
+<header class="site-head">
+  <div class="wrap head-row">
+    <a class="brand" href={getLocalePath(locale)} aria-label={t.owner.name}>
+      <span class="brand-mark" aria-hidden="true">{initials}</span>
+    </a>
 
-    <ul class="hidden md:flex items-center gap-8 list-none m-0 p-0">
-      <li>
-        <a
-          href={`#${sectionId(locale, "experience")}`}
-          class="nav-link link-hover font-medium"
-          style="font-size: 15.5px;"
-        >
-          {t.nav.experience}
-        </a>
-      </li>
-      <li>
-        <a
-          href={`#${sectionId(locale, "projects")}`}
-          class="nav-link link-hover font-medium"
-          style="font-size: 15.5px;"
-        >
-          {t.nav.projects}
-        </a>
-      </li>
-      <li>
-        <a
-          href={`#${sectionId(locale, "skills")}`}
-          class="nav-link link-hover font-medium"
-          style="font-size: 15.5px;"
-        >
-          {t.nav.skills}
-        </a>
-      </li>
-    </ul>
+    <nav class="site-nav" id="site-nav" aria-label={t.nav.primary}>
+      {links.map((link) => <a href={`#${sectionId(locale, link.key)}`}>{link.label}</a>)}
+    </nav>
 
-    <div class="flex items-center gap-3">
-      <LangSwitcher />
-      <ThemeToggle />
-
-      <label
-        class="md:hidden cursor-pointer"
-        for="mobile-menu-toggle"
-        style="color: var(--color-text-secondary);"
+    <div class="controls">
+      <ThemeToggle label={t.nav.theme} />
+      <LangSwitcher locale={locale} label={t.nav.language} />
+      <button
+        type="button"
+        class="menu-btn"
+        id="menu-toggle"
+        aria-label={t.nav.menu}
+        aria-expanded="false"
+        aria-controls="site-nav"
       >
-        <Icon name="menu" size={22} />
-      </label>
+        <Icon name="menu" size={22} class="menu-btn__open" />
+        <Icon name="close" size={22} class="menu-btn__close" />
+      </button>
     </div>
-  </nav>
-
-  <input type="checkbox" id="mobile-menu-toggle" class="sr-only peer" aria-label={t.nav.menu} />
-  <div
-    id="mobile-menu"
-    class="flex flex-col gap-4 px-5 pt-2 pb-2 md:hidden border-t absolute top-full left-0 right-0 z-50 opacity-0 invisible -translate-y-2 transition-all duration-300 ease-in-out peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0"
-    style="border-color: var(--color-surface-700); background: var(--color-surface-900, var(--color-bg));"
-  >
-    <a href={`#${sectionId(locale, "experience")}`} class="nav-link link-hover font-medium py-1">
-      {t.nav.experience}
-    </a>
-    <a href={`#${sectionId(locale, "projects")}`} class="nav-link link-hover font-medium py-1">
-      {t.nav.projects}
-    </a>
-    <a href={`#${sectionId(locale, "skills")}`} class="nav-link link-hover font-medium py-1">
-      {t.nav.skills}
-    </a>
   </div>
 </header>
 
 <script>
-  // Scroll listener stays on window (persists across view transitions); the header is re-queried per navigation (it's swapped).
+  // window/document listeners are bound once (they survive view transitions);
+  // the header and its buttons are re-queried on every astro:page-load.
   let header: HTMLElement | null = null;
 
   function updateHeader(): void {
@@ -88,20 +62,72 @@ const t = useTranslations(locale);
   }
   window.addEventListener("scroll", updateHeader, { passive: true });
 
-  function initHeader(): void {
-    header = document.querySelector(".header-glass");
-    updateHeader();
+  function setMenuOpen(open: boolean): void {
+    header?.classList.toggle("is-open", open);
+    document.getElementById("menu-toggle")?.setAttribute("aria-expanded", String(open));
+  }
 
-    // Close the mobile menu when a section link is tapped.
-    const menuToggle = document.getElementById("mobile-menu-toggle") as HTMLInputElement | null;
-    const mobileMenu = document.getElementById("mobile-menu");
-    mobileMenu?.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        if (menuToggle) menuToggle.checked = false;
-      });
+  function initMenu(): void {
+    const btn = document.getElementById("menu-toggle");
+    btn?.addEventListener("click", () => setMenuOpen(!header?.classList.contains("is-open")));
+    document.querySelectorAll(".site-nav a").forEach((link) => {
+      link.addEventListener("click", () => setMenuOpen(false));
     });
   }
 
-  // Runs on first load and after every client navigation.
-  document.addEventListener("astro:page-load", initHeader);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && header?.classList.contains("is-open")) {
+      setMenuOpen(false);
+      document.getElementById("menu-toggle")?.focus();
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (header?.classList.contains("is-open") && !header.contains(event.target as Node)) {
+      setMenuOpen(false);
+    }
+  });
+
+  let spy: IntersectionObserver | null = null;
+
+  function initNavSpy(): void {
+    spy?.disconnect();
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".site-nav a[href^='#']"));
+    if (!links.length) return;
+
+    const byId = new Map(links.map((a) => [a.getAttribute("href")!.slice(1), a]));
+    const clear = (a: HTMLAnchorElement) => {
+      a.classList.remove("is-active");
+      a.removeAttribute("aria-current");
+    };
+
+    spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = byId.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            links.forEach(clear);
+            link.classList.add("is-active");
+            link.setAttribute("aria-current", "location");
+          } else if (link.classList.contains("is-active")) {
+            clear(link);
+          }
+        });
+      },
+      { rootMargin: "-35% 0px -55% 0px" },
+    );
+
+    byId.forEach((_, id) => {
+      const section = document.getElementById(id);
+      if (section) spy!.observe(section);
+    });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    header = document.querySelector(".site-head");
+    requestAnimationFrame(updateHeader);
+    initMenu();
+    initNavSpy();
+  });
 </script>

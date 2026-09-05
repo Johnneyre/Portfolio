@@ -4,13 +4,9 @@ export type IconName =
   | 'email'
   | 'arrow-down'
   | 'arrow-up-right'
-  | 'briefcase'
-  | 'graduation'
-  | 'calendar'
   | 'menu'
+  | 'close'
   | 'globe'
-  | 'chevron-down'
   | 'webgpu'
   | 'shield'
-  | 'cart'
-  | 'clock';
+  | 'cart';

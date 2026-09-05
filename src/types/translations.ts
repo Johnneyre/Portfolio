@@ -14,6 +14,12 @@ export interface Translations {
     menu: string;
     primary: string;
     footer: string;
+    skip: string;
+    theme: string;
+    language: string;
+  };
+  a11y: {
+    new_tab: string;
   };
   social: {
     email: string;
@@ -34,10 +40,16 @@ export interface Translations {
     demo: string;
     code: string;
     stack: string;
+    screenshot_alt: string;
   };
   skills: {
     title: string;
     subtitle: string;
+  };
+  lang_hint: {
+    text: string;
+    cta: string;
+    close: string;
   };
   footer: {
     links: {

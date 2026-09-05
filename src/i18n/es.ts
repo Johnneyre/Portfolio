@@ -3,7 +3,7 @@ import type { Translations } from '../types/translations';
 export const es: Translations = {
   meta: {
     title: 'Johnneyre Zambrano — Full Stack Developer',
-    description: '+3 años construyendo aplicaciones web escalables. Especialista en Vue.js, TypeScript y arquitecturas modulares.',
+    description: 'Desarrollador Full Stack. +3 años creando aplicaciones web escalables con Vue.js, Angular y TypeScript para seguros y e-commerce.',
   },
   owner: {
     name: 'Johnneyre Zambrano',
@@ -16,6 +16,12 @@ export const es: Translations = {
     menu: 'Menú',
     primary: 'Principal',
     footer: 'Pie de página',
+    skip: 'Saltar a experiencia',
+    theme: 'Tema oscuro',
+    language: 'Idioma',
+  },
+  a11y: {
+    new_tab: '(abre en una pestaña nueva)',
   },
   social: {
     email: 'johnneyrez@gmail.com',
@@ -36,10 +42,16 @@ export const es: Translations = {
     demo: 'Ver demo',
     code: 'Código',
     stack: 'Tecnologías',
+    screenshot_alt: 'Captura de la interfaz de {title}',
   },
   skills: {
     title: 'Skills',
     subtitle: 'Las herramientas con las que construyo mis proyectos.',
+  },
+  lang_hint: {
+    text: 'Esta página también está disponible en español.',
+    cta: 'Cambiar a español',
+    close: 'Cerrar',
   },
   footer: {
     links: {

@@ -2,7 +2,7 @@
 import { SKILL_CATEGORIES } from '../data/portfolio';
 import { useTranslations, sectionId } from '../i18n/utils';
 import type { SupportedLocale } from '../i18n/utils';
-import DecorativeBlobs from './DecorativeBlobs.astro';
+import SectionHead from './SectionHead.astro';
 import TechLogo from './TechLogo.astro';
 
 interface Props {
@@ -15,49 +15,34 @@ const t = useTranslations(locale);
 
 <section
   id={sectionId(locale, 'skills')}
-  class="relative section-padding overflow-hidden cv-auto"
-  style="background: var(--color-surface-950); contain-intrinsic-size: auto 900px;"
+  class="section cv-auto"
+  aria-labelledby="skills-title"
+  data-section="skills"
+  tabindex="-1"
 >
-  <DecorativeBlobs variant="subtle" />
+  <div class="wrap">
+    <SectionHead number="03" title={t.skills.title} headingId="skills-title" lead={t.skills.subtitle} />
 
-  <div class="container-max relative z-10">
-
-    <div class="reveal mb-4">
-      <h2 class="text-section-title" style="color: var(--color-text-primary);">
-        {t.skills.title}
-      </h2>
-    </div>
-    <p class="reveal mb-12 text-base leading-relaxed max-w-xl" style="color: var(--color-text-secondary);">
-      {t.skills.subtitle}
-    </p>
-
-    <div class="flex flex-col gap-10">
+    <div class="skills grid-12">
       {SKILL_CATEGORIES.map((category, catIdx) => {
         const categoryLabel = t.skill_categories[category.id as keyof typeof t.skill_categories];
         return (
-          <div class={`reveal reveal-delay-${Math.min(catIdx + 1, 3)}`}>
-            <h3 class="text-base font-bold mb-6 gradient-text">
-              {categoryLabel}
-            </h3>
-
-            <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
-              {category.skills.map((skill, sIdx) => {
+          <div class={`skill-col reveal reveal-delay-${Math.min(catIdx + 1, 3)}`}>
+            <h3>{categoryLabel}</h3>
+            <ul>
+              {category.skills.map((skill) => {
                 const skillLabel = t.skill_labels[skill.id as keyof typeof t.skill_labels] ?? skill.id;
                 return (
-                  <div
-                    class={`reveal reveal-delay-${Math.min(sIdx + 1, 5)} skill-icon-card`}
-                    title={skillLabel}
-                  >
-                    <TechLogo id={skill.id} size={32} />
+                  <li class="skill-row">
+                    <TechLogo id={skill.id} size={20} />
                     <span>{skillLabel}</span>
-                  </div>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           </div>
         );
       })}
     </div>
-
   </div>
 </section>

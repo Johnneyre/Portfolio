@@ -31,7 +31,6 @@ export const TIMELINE_ITEMS: readonly TimelineItem[] = [
 export const PROJECT_ITEMS: readonly ProjectItem[] = [
   {
     id: 'image-optimize-webgpu',
-    accent: 215,
     liveUrl: 'https://webgpu-image-optimizer.com/',
     repoUrl: 'https://github.com/Johnneyre/image-optimizer-web-gpu',
     tags: [
@@ -43,7 +42,6 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
   },
   {
     id: 'trandio',
-    accent: 290,
     liveUrl: 'https://trandio.app/',
     repoUrl: 'https://github.com/Johnneyre/Trandio',
     tags: [

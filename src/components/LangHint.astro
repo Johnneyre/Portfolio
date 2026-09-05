@@ -1,0 +1,44 @@
+---
+// Replaces the old automatic redirect: Google advises against it and it made
+// crawlers see "/" as a redirect to "/en/". Copy is in the language being offered.
+import { useTranslations, getLocalePath } from "../i18n/utils";
+import type { SupportedLocale } from "../i18n/utils";
+
+interface Props {
+  locale: SupportedLocale;
+}
+
+const { locale } = Astro.props;
+const other: SupportedLocale = locale === "es" ? "en" : "es";
+const t = useTranslations(other).lang_hint;
+---
+
+<div id="lang-hint" class="lang-hint" role="status" hidden>
+  <div class="wrap lang-hint__row">
+    <p lang={other}>
+      {t.text}
+      <a class="ul" href={getLocalePath(other)} hreflang={other} lang={other} data-lang={other}>{t.cta}</a>
+    </p>
+    <button type="button" class="lang-hint__close" data-dismiss aria-label={t.close} lang={other}>×</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const hint = document.getElementById("lang-hint");
+    if (!hint || localStorage.getItem("lang")) return;
+
+    const pref = (navigator.language || "").slice(0, 2).toLowerCase() === "es" ? "es" : "en";
+    const current = document.documentElement.lang;
+    if (pref === current) return;
+
+    hint.hidden = false;
+    hint.querySelector<HTMLAnchorElement>("a[data-lang]")?.addEventListener("click", () => {
+      localStorage.setItem("lang", pref);
+    });
+    hint.querySelector("[data-dismiss]")?.addEventListener("click", () => {
+      localStorage.setItem("lang", current);
+      hint.hidden = true;
+    });
+  });
+</script>

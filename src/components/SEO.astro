@@ -1,8 +1,9 @@
 ---
 import type { SupportedLocale } from "../i18n/utils";
 import { useTranslations } from "../i18n/utils";
-import { SOCIAL_LINKS } from "../data/portfolio";
+import { SOCIAL_LINKS, TIMELINE_ITEMS } from "../data/portfolio";
 import { en } from "../i18n/en";
+import portrait from "../assets/hero/johnneyre-zambrano.jpg";
 
 interface Props {
   locale: SupportedLocale;
@@ -25,6 +26,10 @@ const imageAlt = `${t.owner.name} – ${t.owner.role}`;
 
 const linkedinUrl = SOCIAL_LINKS.find((l) => l.icon === "linkedin")?.href;
 const githubUrl = SOCIAL_LINKS.find((l) => l.icon === "github")?.href;
+const emailHref = SOCIAL_LINKS.find((l) => l.icon === "email")?.href;
+
+const work = TIMELINE_ITEMS.find((i) => i.type === "work");
+const school = TIMELINE_ITEMS.find((i) => i.type === "education");
 
 // Every technology shown on the page (kept in sync via skill_labels) plus the focus areas from the bio.
 const knowsAbout = [
@@ -34,28 +39,51 @@ const knowsAbout = [
   "Scalable Web Architecture",
 ];
 
-const personSchema = {
+const personId = `${esUrl}#person`;
+const websiteId = `${esUrl}#website`;
+const graph = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: t.owner.name,
-  jobTitle: t.owner.role,
-  description: t.meta.description,
-  url: siteUrl,
-  sameAs: [linkedinUrl, githubUrl].filter(Boolean),
-  knowsAbout,
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: t.meta.title,
-  description: t.meta.description,
-  url: siteUrl,
-  author: {
-    "@type": "Person",
-    name: t.owner.name,
-  },
-  inLanguage: locale === "es" ? "es-ES" : "en-US",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": personId,
+      name: t.owner.name,
+      jobTitle: t.owner.role,
+      description: t.meta.description,
+      url: esUrl,
+      image: new URL(portrait.src, esUrl).href,
+      email: emailHref,
+      sameAs: [linkedinUrl, githubUrl].filter(Boolean),
+      knowsAbout,
+      knowsLanguage: ["es", "en"],
+      address: { "@type": "PostalAddress", addressLocality: "Bogotá", addressCountry: "CO" },
+      worksFor: work && { "@type": "Organization", name: work.company },
+      alumniOf: school && {
+        "@type": "CollegeOrUniversity",
+        name: school.company,
+        address: { "@type": "PostalAddress", addressRegion: "Táchira", addressCountry: "VE" },
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      name: t.owner.name,
+      alternateName: siteUrl.replace(/^https?:\/\//, ""),
+      url: esUrl,
+      inLanguage: ["es", "en"],
+      publisher: { "@id": personId },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${currentUrl}#profile`,
+      url: currentUrl,
+      name: t.meta.title,
+      inLanguage: locale,
+      isPartOf: { "@id": websiteId },
+      mainEntity: { "@id": personId },
+      dateModified: new Date().toISOString().slice(0, 10),
+    },
+  ],
 };
 ---
 
@@ -66,9 +94,9 @@ const websiteSchema = {
 <link rel="alternate" hreflang="en" href={enUrl} />
 <link rel="alternate" hreflang="x-default" href={esUrl} />
 
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />
-<meta name="theme-color" content="#0a0a0a" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f8f9" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e0f10" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content={t.owner.name} />
@@ -78,6 +106,7 @@ const websiteSchema = {
 <meta property="og:locale" content={ogLocale} />
 <meta property="og:locale:alternate" content={ogLocaleAlternate} />
 <meta property="og:image" content={ogImage} />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content={imageAlt} />
@@ -88,5 +117,4 @@ const websiteSchema = {
 <meta name="twitter:image" content={ogImage} />
 <meta name="twitter:image:alt" content={imageAlt} />
 
-<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(graph)} />

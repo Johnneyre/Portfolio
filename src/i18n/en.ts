@@ -3,7 +3,7 @@ import type { Translations } from '../types/translations';
 export const en: Translations = {
   meta: {
     title: 'Johnneyre Zambrano — Full Stack Developer',
-    description: '3+ years building scalable web applications. Specialist in Vue.js, TypeScript and modular architectures.',
+    description: 'Full Stack Developer. 3+ years building scalable web apps with Vue.js, Angular and TypeScript for insurance and e-commerce.',
   },
   owner: {
     name: 'Johnneyre Zambrano',
@@ -16,6 +16,12 @@ export const en: Translations = {
     menu: 'Menu',
     primary: 'Primary',
     footer: 'Footer',
+    skip: 'Skip to experience',
+    theme: 'Dark theme',
+    language: 'Language',
+  },
+  a11y: {
+    new_tab: '(opens in a new tab)',
   },
   social: {
     email: 'johnneyrez@gmail.com',
@@ -36,10 +42,16 @@ export const en: Translations = {
     demo: 'Live demo',
     code: 'Source',
     stack: 'Technologies',
+    screenshot_alt: 'Screenshot of the {title} interface',
   },
   skills: {
     title: 'Skills',
     subtitle: 'The tools I use to build my projects.',
+  },
+  lang_hint: {
+    text: 'This page is also available in English.',
+    cta: 'Switch to English',
+    close: 'Dismiss',
   },
   footer: {
     links: {

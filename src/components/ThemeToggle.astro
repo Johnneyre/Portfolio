@@ -1,49 +1,42 @@
-<button
-  id="theme-toggle"
-  aria-label="Cambiar tema"
-  title="Cambiar tema"
-  class="flex items-center justify-center w-9 h-9 rounded-lg border transition-colors duration-200"
-  style="border-color: var(--color-surface-700); background: var(--color-header-buttons);"
->
+---
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<button id="theme-toggle" type="button" class="theme-btn" aria-label={label} title={label} aria-pressed="false">
   <!-- Shown in dark mode -->
   <svg
     id="icon-moon"
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
     viewBox="0 0 24 24"
-    fill="oklch(80% 0.18 295)"
-    stroke="oklch(70% 0.2 295)"
+    fill="none"
+    stroke="currentColor"
     stroke-width="1.5"
-    stroke-linecap="round"
     stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
   >
-    <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"></path>
+    <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"></path>
   </svg>
 
   <!-- Shown in light mode -->
   <svg
     id="icon-sun"
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
     viewBox="0 0 24 24"
-    fill="oklch(85% 0.18 85)"
-    stroke="oklch(75% 0.22 85)"
+    fill="none"
+    stroke="currentColor"
     stroke-width="1.5"
     stroke-linecap="round"
-    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
     class="hidden"
   >
-    <circle cx="12" cy="12" r="5"></circle>
-    <line x1="12" y1="1" x2="12" y2="3"></line>
-    <line x1="12" y1="21" x2="12" y2="23"></line>
-    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-    <line x1="1" y1="12" x2="3" y2="12"></line>
-    <line x1="21" y1="12" x2="23" y2="12"></line>
-    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    <circle cx="12" cy="12" r="4"></circle>
+    <path
+      d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"
+    ></path>
   </svg>
 </button>
 
@@ -54,28 +47,30 @@
 
   const isLight = (): boolean => root.classList.contains(LIGHT_CLASS);
 
-  function syncIcons(): void {
-    const moon = document.getElementById("icon-moon");
-    const sun = document.getElementById("icon-sun");
-    if (!moon || !sun) return;
-    moon.classList.toggle("hidden", isLight());
-    sun.classList.toggle("hidden", !isLight());
+  function syncState(): void {
+    const light = isLight();
+    document.getElementById("icon-moon")?.classList.toggle("hidden", light);
+    document.getElementById("icon-sun")?.classList.toggle("hidden", !light);
+    document.getElementById("theme-toggle")?.setAttribute("aria-pressed", String(!light));
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((m) => m.setAttribute("content", light ? "#f7f8f9" : "#0e0f10"));
   }
 
   function toggleTheme(): void {
     root.classList.add("theme-transitioning");
     root.classList.toggle(LIGHT_CLASS);
     localStorage.setItem(THEME_KEY, isLight() ? "light" : "dark");
-    syncIcons();
+    syncState();
     setTimeout(() => root.classList.remove("theme-transitioning"), 300);
   }
 
   // Re-bind on first load and after every navigation (the button is swapped).
   document.addEventListener("astro:page-load", () => {
-    syncIcons();
+    syncState();
     document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
   });
 
   // Sync before the transition paints so the swapped button isn't stale.
-  document.addEventListener("astro:after-swap", syncIcons);
+  document.addEventListener("astro:after-swap", syncState);
 </script>

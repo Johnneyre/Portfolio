@@ -79,6 +79,15 @@ export const es: Translations = {
         'Privacidad total y procesamiento paralelo en GPU.',
       ],
     },
+    trandio: {
+      title: 'Trandio',
+      description: 'Diccionario interactivo de patrones chartistas con gráficos de velas y un playground para detectarlos en tus propios datos.',
+      highlights: [
+        '24 patrones de análisis técnico dibujados sobre velas generadas a medida, con líneas y marcadores de compra/venta.',
+        'Playground que carga velas OHLC desde CSV y superpone los patrones detectados.',
+        'Gráficos animados con lightweight-charts, tema claro/oscuro y soporte de prefers-reduced-motion.',
+      ],
+    },
     'insurance-system': {
       title: 'Sistema de Gestión de Seguros',
       description: 'Plataforma de gestión de seguros con frontend refactorizado hacia Screaming Architecture.',
@@ -96,14 +105,6 @@ export const es: Translations = {
         'Modelo de datos y operaciones CRUD con Drizzle ORM.',
         'Carrito de compras y filtros de búsqueda avanzados.',
         'Gestión autónoma de productos, categorías y enlaces estilo Linktree.',
-      ],
-    },
-    'hours-control': {
-      title: 'Control de Horas',
-      description: 'Sistema web responsive para el control de horas de empleados universitarios, desarrollado en equipo.',
-      highlights: [
-        'Automatización de tareas repetitivas con un incremento del 30% en el desempeño del personal.',
-        'Supervisión de actividades en tiempo real para la gerencia.',
       ],
     },
   },

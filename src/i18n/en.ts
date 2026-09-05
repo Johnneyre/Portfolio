@@ -79,6 +79,15 @@ export const en: Translations = {
         'Full privacy and parallel GPU processing.',
       ],
     },
+    trandio: {
+      title: 'Trandio',
+      description: 'Interactive dictionary of chart patterns with candlestick charts, plus a playground to detect them in your own data.',
+      highlights: [
+        '24 technical analysis patterns drawn over tailor-made candles, with defining lines and buy/sell markers.',
+        'Playground that loads OHLC candles from CSV and overlays the detected patterns.',
+        'Animated charts with lightweight-charts, light/dark theme and prefers-reduced-motion support.',
+      ],
+    },
     'insurance-system': {
       title: 'Insurance Management System',
       description: 'Insurance management platform with a frontend refactored to Screaming Architecture.',
@@ -96,14 +105,6 @@ export const en: Translations = {
         'Data model and CRUD operations built with Drizzle ORM.',
         'Shopping cart and advanced search filters.',
         'Autonomous management of products, categories and Linktree-style links.',
-      ],
-    },
-    'hours-control': {
-      title: 'Hours Control',
-      description: 'Responsive web system for university employee hours tracking, built collaboratively.',
-      highlights: [
-        'Automated repetitive tasks, boosting staff performance by 30%.',
-        'Real-time activity monitoring for management.',
       ],
     },
   },

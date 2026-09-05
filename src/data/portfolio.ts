@@ -42,6 +42,17 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
     ],
   },
   {
+    id: 'trandio',
+    accent: 290,
+    liveUrl: 'https://trandio.app/',
+    repoUrl: 'https://github.com/Johnneyre/Trandio',
+    tags: [
+      { id: 'svelte' },
+      { id: 'typescript' },
+      { id: 'tailwindcss' },
+    ],
+  },
+  {
     id: 'insurance-system',
     accent: 255,
     concept: 'shield',
@@ -60,16 +71,6 @@ export const PROJECT_ITEMS: readonly ProjectItem[] = [
       { id: 'vuejs' },
       { id: 'typescript' },
       { id: 'tailwindcss' },
-    ],
-  },
-  {
-    id: 'hours-control',
-    accent: 70,
-    concept: 'clock',
-    tags: [
-      { id: 'svelte' },
-      { id: 'tailwindcss' },
-      { id: 'supabase' },
     ],
   },
 ] as const;

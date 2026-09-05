@@ -1,0 +1,25 @@
+---
+import type { IconName } from "../types/icons";
+import Icon from "./Icon.astro";
+
+interface Props {
+  href: string;
+  icon: IconName;
+  label: string;
+  title: string;
+}
+
+const { href, icon, label, title } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`${title} – ${label}`}
+  class="social-btn social-btn--pill inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border"
+>
+  <Icon name={icon} size={16} aria-hidden="true" />
+  <span>{label}</span>
+  <Icon name="arrow-up-right" size={14} aria-hidden="true" class="ml-0.5 opacity-70" />
+</a>

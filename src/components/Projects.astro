@@ -6,7 +6,9 @@ import { useTranslations, sectionId } from '../i18n/utils';
 import type { SupportedLocale } from '../i18n/utils';
 import DecorativeBlobs from './DecorativeBlobs.astro';
 import Icon from './Icon.astro';
+import ProjectLink from './ProjectLink.astro';
 import TechLogo from './TechLogo.astro';
+import TechStack from './TechStack.astro';
 import webgpuImg from '../assets/projects/image-optimize-webgpu.png';
 import trandioImg from '../assets/projects/trandio.png';
 
@@ -21,8 +23,6 @@ const PROJECT_IMAGES: Record<string, ImageMetadata> = {
   'image-optimize-webgpu': webgpuImg,
   trandio: trandioImg,
 };
-
-const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_labels] ?? id;
 ---
 
 <section
@@ -121,45 +121,20 @@ const tagLabel = (id: string) => t.skill_labels[id as keyof typeof t.skill_label
                 </ul>
               </div>
 
-              <div class="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span class="tag-chip">
-                    <TechLogo id={tag.id} size={16} />
-                    {tagLabel(tag.id)}
-                  </span>
-                ))}
-              </div>
+              <footer class="flex flex-col gap-6 pt-4">
+                <TechStack tags={project.tags} locale={locale} />
 
-              {hasLinks && (
-                <div class="flex flex-wrap gap-3">
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${tItem.title} – ${t.projects.demo}`}
-                      class="social-btn social-btn--pill inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border"
-                    >
-                      <Icon name="globe" size={16} aria-hidden="true" />
-                      <span>{t.projects.demo}</span>
-                      <Icon name="arrow-up-right" size={14} aria-hidden="true" class="ml-0.5 opacity-70" />
-                    </a>
-                  )}
-                  {project.repoUrl && (
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${tItem.title} – ${t.projects.code}`}
-                      class="social-btn social-btn--pill inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold border"
-                    >
-                      <Icon name="github" size={16} aria-hidden="true" />
-                      <span>{t.projects.code}</span>
-                      <Icon name="arrow-up-right" size={14} aria-hidden="true" class="ml-0.5 opacity-70" />
-                    </a>
-                  )}
-                </div>
-              )}
+                {hasLinks && (
+                  <div class="flex flex-wrap gap-3">
+                    {project.liveUrl && (
+                      <ProjectLink href={project.liveUrl} icon="globe" label={t.projects.demo} title={tItem.title} />
+                    )}
+                    {project.repoUrl && (
+                      <ProjectLink href={project.repoUrl} icon="github" label={t.projects.code} title={tItem.title} />
+                    )}
+                  </div>
+                )}
+              </footer>
             </div>
           </article>
         );

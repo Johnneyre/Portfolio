@@ -35,6 +35,7 @@ export const es: Translations = {
     title: 'Proyectos',
     demo: 'Ver demo',
     code: 'Código',
+    stack: 'Tecnologías',
   },
   skills: {
     title: 'Skills',

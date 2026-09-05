@@ -1,0 +1,24 @@
+---
+import type { TechTag } from '../types/data';
+import { useTranslations } from '../i18n/utils';
+import type { SupportedLocale } from '../i18n/utils';
+import TechLogo from './TechLogo.astro';
+
+interface Props {
+  tags: readonly TechTag[];
+  locale: SupportedLocale;
+}
+
+const { tags, locale } = Astro.props;
+const t = useTranslations(locale);
+const label = (id: string) => t.skill_labels[id] ?? id;
+---
+
+<ul class="tech-stack" aria-label={t.projects.stack}>
+  {tags.map((tag) => (
+    <li class="tech-stack__item">
+      <TechLogo id={tag.id} size={16} class={`tech-stack__logo tech-stack__logo--${tag.id}`} />
+      <span>{label(tag.id)}</span>
+    </li>
+  ))}
+</ul>

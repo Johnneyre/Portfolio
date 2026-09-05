@@ -33,6 +33,7 @@ export interface Translations {
     title: string;
     demo: string;
     code: string;
+    stack: string;
   };
   skills: {
     title: string;
